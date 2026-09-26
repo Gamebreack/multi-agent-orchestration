@@ -20,10 +20,11 @@ As-built, no backlog rows for any of this:
 - Antigravity CLI assets (`antigravity/`).
 - Harness comparison and per-harness docs (`docs/harness-comparison.md`, `docs/opencode.md`,
   `docs/claude-code-observations.md`, `docs/antigravity.md`).
-- docs/megaplan/ planning system (megaplan skill): backlog (b03 in progress; b04–b07 pending), glossary, done
+- docs/megaplan/ planning system (megaplan skill): backlog (b04–b07 pending), glossary, done
   ledger — b01 closed 2026-09-25 with the hybrid ICM architecture decision (ICM stages organize
   work, specialist agents execute it).
 - Hybrid ICM structure (b02, 2026-09-26): root AGENTS.md (layer 0) + CONTEXT.md (layer 1) + stages/01-intake…05-release stage contracts; work items flow intake → design → implement → verify → release
+- Shared policy home (b03, 2026-09-26): docs/policies.md states every cross-harness policy (roles, permissions, verification ladder, burst, model routing, provider prerequisites); README is a front door; antigravity/legacy-json is archived; oc-preset assumptions documented
 - Benchmark harness (`opencode/bench/`), results git-ignored.
 - Git repo on `main` with origin remote
   `https://github.com/Gamebreack/multi-agent-orchestration.git`, initial commit made 2026-09-25,
