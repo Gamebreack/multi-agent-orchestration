@@ -5,7 +5,7 @@ It reads, plans, delegates, and reconciles; only subagents edit, and verificatio
 fresh context. This page compares how Claude Code, OpenCode and Antigravity CLI let you
 express that, as of September 2026.
 
-| | Claude Code 2.1.263 | OpenCode 1.18.29 | Antigravity CLI 1.1.27 |
+| | Claude Code 2.1.263 | OpenCode 2.x (validated 2.0.14) | Antigravity CLI 1.1.27 |
 |---|---|---|---|
 | Agent definition | `~/.claude/agents/<name>.md` (frontmatter + prompt) | `~/.config/opencode/agents/<name>.md` + `opencode.jsonc` | `agents/<name>/agent.md` (markdown + frontmatter), global, workspace or plugin; shared `rules/AGENTS.md` |
 | Orchestrator selection | `claude --agent manager` (per-project default possible via `.claude/settings.json`) | `default_agent` in config | `agy --agent orchestrator-agent` on every launch; falls back silently, so use the `agyo` wrapper |
@@ -48,7 +48,7 @@ is a second agent. Its trap is the silent fallback when `--agent` names a non-ex
 * Workers get a self-contained brief: goal, in/out-of-scope paths, acceptance criteria,
   required verification, and must report files changed + commands run + failures.
 * Prompt-level rules that no harness enforces yet: no overlapping edits between concurrent
-  workers, no commits/pushes by workers, a cap on concurrent implementers.
+  workers, no worker commits (push is hard-denied on OpenCode), a cap on concurrent implementers.
 
 ## What the logs say about each boundary in practice
 

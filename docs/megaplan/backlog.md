@@ -20,7 +20,8 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
-| b03 | Separate shared reusable policies from harness adapters and optional model presets | pending | — |
+| b03 | Separate shared reusable policies from harness adapters and optional model presets | in-progress | [backlog-items/b03.md](backlog-items/b03.md) |
 | b04 | Harness-explicit, backup-aware installation and safe uninstall for all three harnesses | pending | — |
 | b05 | Reusable ICM starter workspace with onboarding and one worked example | pending | — |
 | b06 | Independent review and isolated validation with tested-vs-pending OS/harness support matrix | pending | — |
+| b07 | OpenCode V2 shared-permissions migration: convert the 8 agent permission maps to the V2 `permissions` array and collapse the 4 duplicated worker bash maps into one top-level `permissions` block in opencode.jsonc (scout-verified: agent rules append after global, last match wins) | pending | — |

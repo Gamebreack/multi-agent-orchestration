@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # Switch all opencode agents' model/variant to a named preset (openai <-> go).
+# Assumptions: bash 4+, GNU sed -i, jq, and a running OpenCode CLI (api query at the end).
+# Writes the target agent files in place with NO backups: copy this repo's opencode/agents/
+# into $OC_AGENTS_DIR first, or back it up. OC_AGENTS_DIR overrides the target (default
+# ~/.config/opencode/agents).
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

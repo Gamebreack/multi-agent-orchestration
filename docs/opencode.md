@@ -3,7 +3,7 @@
 Files: [`opencode/opencode.jsonc`](../opencode/opencode.jsonc),
 [`opencode/agents/*.md`](../opencode/agents), [`opencode/AGENTS.md`](../opencode/AGENTS.md).
 Install by copying them to `~/.config/opencode/` (`opencode.jsonc`, `AGENTS.md`, `agents/`).
-Built against OpenCode **1.18.29**; the model split and `external_directory: ask` were applied on 2.0.14 (2026-09-22).
+Built against OpenCode **1.18.29**; the model split and `external_directory: ask` were applied on 2.0.14 (2026-09-22). Supported: OpenCode 2.x.
 
 ```
                  orchestrator  (primary, gpt-6-astra, high) — read-only, no bash
