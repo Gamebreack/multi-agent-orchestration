@@ -20,7 +20,7 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
-| b02 | Establish ICM context/stage structure per chosen architecture | pending | — |
+| b02 | Establish ICM context/stage structure per chosen architecture | in-progress | [backlog-items/b02.md](backlog-items/b02.md) |
 | b03 | Separate shared reusable policies from harness adapters and optional model presets | pending | — |
 | b04 | Harness-explicit, backup-aware installation and safe uninstall for all three harnesses | pending | — |
 | b05 | Reusable ICM starter workspace with onboarding and one worked example | pending | — |

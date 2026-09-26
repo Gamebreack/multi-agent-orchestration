@@ -4,6 +4,8 @@ A small, native Claude Code configuration (agents + one hook + one settings entr
 the foreground **Manager** only plans, delegates and reconciles, and **never modifies the
 repository itself**. Built and validated on Claude Code **2.1.263**.
 
+Work on this repo itself follows an ICM structure — see [CONTEXT.md](CONTEXT.md) for routing and stages/ for the workflow.
+
 ```
                          MANAGER  (fable, high) — orchestration only
                             │
