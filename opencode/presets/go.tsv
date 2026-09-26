@@ -1,0 +1,10 @@
+# Go preset — chosen from bench rounds opencode/bench/results/20260922-161138 (19 models × 7 tasks), 20260923-102656 (14 models × 3 hard tasks), and 20260923-111846 (MiMo rerun, 2 models × 3 tasks × 3 reps).
+# Re-derive when the Go roster changes: see opencode/bench/README.md.
+orchestrator	opencode-go/glm-5.2	high
+hard-implementer	opencode-go/mimo-v2.6-pro	-
+reviewer	opencode-go/glm-5.2	high
+implementer	opencode-go/mimo-v2.6-flash	-
+verifier	opencode-go/mimo-v2.6-flash	-
+mechanical	opencode-go/mimo-v2.6-flash	-
+scout	opencode-go/deepseek-v4.1-flash	-
+explore	opencode-go/deepseek-v4.1-flash	-
