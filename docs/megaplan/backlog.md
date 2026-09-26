@@ -20,7 +20,6 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
-| b01 | ICM architecture checkpoint: single-agent vs ICM+specialists comparison, operator decision required before migration | review | [backlog-items/b01.md](backlog-items/b01.md) |
 | b02 | Establish ICM context/stage structure per chosen architecture | pending | — |
 | b03 | Separate shared reusable policies from harness adapters and optional model presets | pending | — |
 | b04 | Harness-explicit, backup-aware installation and safe uninstall for all three harnesses | pending | — |
