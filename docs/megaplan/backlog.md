@@ -20,5 +20,4 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
-| b05 | Reusable ICM starter workspace with onboarding and one worked example | in-progress | [backlog-items/b05.md](backlog-items/b05.md) |
 | b06 | Independent review and isolated validation with tested-vs-pending OS/harness support matrix | pending | — |
