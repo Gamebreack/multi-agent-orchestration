@@ -9,10 +9,10 @@ express that, as of September 2026.
 |---|---|---|---|
 | Agent definition | `~/.claude/agents/<name>.md` (frontmatter + prompt) | `~/.config/opencode/agents/<name>.md` + `opencode.jsonc` | `agents/<name>/agent.md` (markdown + frontmatter), global, workspace or plugin; shared `rules/AGENTS.md` |
 | Orchestrator selection | `claude --agent manager` (per-project default possible via `.claude/settings.json`) | `default_agent` in config | `agy --agent orchestrator-agent` on every launch; falls back silently, so use the `agyo` wrapper |
-| Read-only enforcement | frontmatter `tools:` **plus** a `PreToolUse` hook (allow-list, fail-closed) | per-agent permission map, `"*": deny` first | frontmatter `tools:` whitelist (verified after the 2026-09-08 rewrite; the earlier JSON format never loaded) |
-| Granularity | tool name; MCP by server prefix in the hook | tool name, bash per command pattern, read per file glob, MCP per prefix | tool name |
-| Who may spawn | manager only: `Agent(<six roles>)` | `task:` map on the orchestrator; `subagent_depth: 1` | orchestrator has `invoke_subagent`; workers do not |
-| Model per role | `model` alias + `effort` | one provider, `variant` (medium/high/max) | `customAgent.model`, else session model |
+| Read-only enforcement | frontmatter `tools:` **plus** a `PreToolUse` hook (allow-list, fail-closed) | per-agent permissions arrays, `"*"/"*" → deny` first | frontmatter `tools:` whitelist (verified after the 2026-09-08 rewrite; the earlier JSON format never loaded) |
+| Granularity | tool name; MCP by server prefix in the hook | tool name, shell per command pattern, read per file glob, MCP per prefix | tool name |
+| Who may spawn | manager only: `Agent(<six roles>)` | `subagent` rules on the orchestrator; `experimental.subagent_depth: 1` | orchestrator has `invoke_subagent`; workers do not |
+| Model per role | `model` alias + `effort` | one provider, `model#variant` | `customAgent.model`, else session model |
 | Cheap tier | haiku explorer/mechanical-worker with `maxTurns` | none (variant `medium`) | none pinned |
 | Worker runs its own tests | yes (worker has Bash) | yes, allow-listed commands; others `ask` | **no** — writer has no shell; reviewer runs tests |
 | Independent verification | `verifier` (sonnet) + `reviewer` (opus) | `reviewer` on request | `reviewer-agent`, mandatory in the loop |

@@ -4,20 +4,20 @@
   // through the v1 migrator, which silently drops "codemode". codemode:false exposes a
   // server's tools directly as <server>_<tool>; the default (true) hides them inside the
   // Code Mode `execute` tool, which the orchestrator's "*": deny keeps hidden.
-  // Each server also needs a `<server>_*: allow` rule in agents/orchestrator.md, placed
-  // AFTER the `"*": deny` line, because the last matching rule wins. Do not add a per-agent
-  // `tools:` map for them: the migrator emits those rules before the catch-all and drops
-  // the later permission entries, which re-hides every MCP tool.
+  // Each server also needs a matching allow rule appended to the permissions array in
+  // agents/orchestrator.md, e.g. - { action: <server>_<tool>, resource: "*", effect: allow }.
+  // Agent rules run after global rules and the last match wins, so the appended allow
+  // overrides the agent's catch-all deny.
   "mcp": {
     "servers": {
       // "<name>": { "type": "remote", "url": "https://...", "disabled": false, "codemode": false }
     }
   },
   "default_agent": "orchestrator",
-  "subagent_depth": 1,
-  "agent": {
-    "build":   { "disable": true },
-    "plan":    { "disable": true },
-    "general": { "disable": true }
+  "experimental": { "subagent_depth": 1 },
+  "agents": {
+    "build":   { "disabled": true },
+    "plan":    { "disabled": true },
+    "general": { "disabled": true }
   }
 }

@@ -1,38 +1,86 @@
 ---
 description: Coordinates work and delegates every repository change to approved subagents
 mode: primary
-model: openai/gpt-6-astra
-variant: high
-permission:
-  "*": deny
-  read:
-    "*": allow
-    "*.env": deny
-    "*.env.*": deny
-    "*.env.example": allow
-  glob: allow
-  grep: allow
-  list: allow
-  lsp: allow
-  webfetch: allow
-  websearch: allow
-  question: allow
-  todowrite: allow
-  skill: allow
-  task:
-    "*": deny
-    mechanical: allow
-    implementer: allow
-    hard-implementer: allow
-    verifier: allow
-    reviewer: allow
-    explore: allow
-    scout: allow
-  # one rule per MCP server, matching the prefix of its injected tools:
-  # <server-name>_*: allow
-  edit: deny
-  bash: deny
-  external_directory: ask
+model: openai/gpt-6-astra#high
+permissions:
+  - action: "*"
+    resource: "*"
+    effect: deny
+  - action: read
+    resource: "*"
+    effect: allow
+  - action: read
+    resource: "*.env"
+    effect: deny
+  - action: read
+    resource: "*.env.*"
+    effect: deny
+  - action: read
+    resource: "*.env.example"
+    effect: allow
+  - action: glob
+    resource: "*"
+    effect: allow
+  - action: grep
+    resource: "*"
+    effect: allow
+  - action: list
+    resource: "*"
+    effect: allow
+  - action: lsp
+    resource: "*"
+    effect: allow
+  - action: webfetch
+    resource: "*"
+    effect: allow
+  - action: websearch
+    resource: "*"
+    effect: allow
+  - action: question
+    resource: "*"
+    effect: allow
+  - action: todowrite
+    resource: "*"
+    effect: allow
+  - action: skill
+    resource: "*"
+    effect: allow
+  - action: subagent
+    resource: "*"
+    effect: deny
+  - action: subagent
+    resource: "mechanical"
+    effect: allow
+  - action: subagent
+    resource: "implementer"
+    effect: allow
+  - action: subagent
+    resource: "hard-implementer"
+    effect: allow
+  - action: subagent
+    resource: "verifier"
+    effect: allow
+  - action: subagent
+    resource: "reviewer"
+    effect: allow
+  - action: subagent
+    resource: "explore"
+    effect: allow
+  - action: subagent
+    resource: "scout"
+    effect: allow
+  # one rule per MCP server tool, matching the action prefix of its injected
+  # tools, appended to this array, e.g.:
+  # - { action: <server>_<tool>, resource: "*", effect: allow }
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "*"
+    effect: deny
+  - action: external_directory
+    resource: "*"
+    effect: ask
 ---
 
 You are the user's primary software-engineering coordinator.

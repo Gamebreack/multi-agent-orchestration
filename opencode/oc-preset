@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-# Switch all opencode agents' model/variant to a named preset (openai <-> go).
+# Switch all opencode agents' model to a named preset (openai <-> go).
+# Agent files use the merged model form: model: provider/model[#variant], which is
+# exactly what the preset TSVs store in their model column (2 columns: agent<TAB>model).
 # Assumptions: bash 4+, GNU sed -i, jq, and a running OpenCode CLI (api query at the end).
 # Writes the target agent files in place with NO backups: copy this repo's opencode/agents/
 # into $OC_AGENTS_DIR first, or back it up. OC_AGENTS_DIR overrides the target (default
 # ~/.config/opencode/agents).
+# Target agent files should be V2 form (merged model line); leftover variant: lines are removed on switch.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,29 +16,22 @@ AGENTS_DIR="${OC_AGENTS_DIR:-$HOME/.config/opencode/agents}"
 current_model() {
   grep -m1 '^model:' "$1" | sed 's/^model:[[:space:]]*//'
 }
-current_variant() {
-  grep -m1 '^variant:' "$1" | sed 's/^variant:[[:space:]]*//' || true
-}
 
 if [[ $# -eq 0 ]]; then
   echo "Current agent models (in $AGENTS_DIR):"
-  declare -A openai_match=() go_match=()
   for f in "$AGENTS_DIR"/*.md; do
     agent="$(basename "$f" .md)"
     model="$(current_model "$f")"
-    variant="$(current_variant "$f")"
-    printf '  %-18s %-30s %s\n' "$agent" "$model" "${variant:-<none>}"
+    printf '  %-18s %s\n' "$agent" "$model"
   done
   for preset in "$PRESETS_DIR"/*.tsv; do
     name="$(basename "$preset" .tsv)"
     match=1
-    while IFS=$'\t' read -r agent model variant; do
+    while IFS=$'\t' read -r agent model; do
       [[ "$agent" =~ ^#.*$ || -z "$agent" ]] && continue
       f="$AGENTS_DIR/$agent.md"
       [[ -f "$f" ]] || { match=0; break; }
       [[ "$(current_model "$f")" == "$model" ]] || { match=0; break; }
-      want_variant="$variant"; [[ "$want_variant" == "-" ]] && want_variant=""
-      [[ "$(current_variant "$f")" == "$want_variant" ]] || { match=0; break; }
     done < "$preset"
     [[ $match -eq 1 ]] && echo "Matches preset: $name"
   done
@@ -53,7 +49,7 @@ if [[ ! -f "$preset_file" ]]; then
   exit 1
 fi
 
-while IFS=$'\t' read -r agent model variant; do
+while IFS=$'\t' read -r agent model; do
   [[ "$agent" =~ ^#.*$ || -z "$agent" ]] && continue
   f="$AGENTS_DIR/$agent.md"
   if [[ ! -f "$f" ]]; then
@@ -61,22 +57,11 @@ while IFS=$'\t' read -r agent model variant; do
     continue
   fi
   esc_model="$(printf '%s' "$model" | sed 's/[\/&]/\\&/g')"
-  sed -i "s/^model:.*/model: $esc_model/" "$f"
-  if [[ "$variant" == "-" ]]; then
-    sed -i '/^variant:/d' "$f"
-  elif grep -q '^variant:' "$f"; then
-    sed -i "s/^variant:.*/variant: $variant/" "$f"
-  else
-    sed -i "/^model:/a variant: $variant" "$f"
-  fi
-  if [[ "$variant" == "-" ]]; then
-    echo "Set $agent -> $model"
-  else
-    echo "Set $agent -> $model ($variant)"
-  fi
+  sed -i -e "s/^model:.*/model: $esc_model/" -e "/^variant:/d" "$f"
+  echo "Set $agent -> $model"
 done < "$preset_file"
 
 echo "Waiting for hot reload..."
 sleep 3
-opencode api GET /api/agent 2>/dev/null | jq -r '.data[] | select(.mode!=null) | "\(.name)\t\(.model.providerID // "-")/\(.model.id // "-")\t\(.model.variant // "-")"' | sort
-echo "If any agent above still shows its old model, run: opencode service restart"
+echo "If any agent below still shows its old model, run: opencode service restart"
+opencode api get /api/agent 2>/dev/null | jq -r '.data[] | select(.mode!=null) | "\(.name)\t\(.model.providerID // "-")/\(.model.id // "-")\t\(.model.variant // "-")"' | sort || true

@@ -35,13 +35,13 @@ that also runs tests): a harness limit, not a policy divergence.
 - **Deny by default**, fail closed, on every harness.
 - Edits happen only through delegated workers; verification never edits.
 - Workers never commit or push. Commits and pushes are operator-authorized
-  (OpenCode also hard-denies `git push*` in the worker bash maps).
+  (OpenCode also hard-denies `git push*` in the worker shell rules).
 - Enforcement is either HARD (checked by hook or permission map) or
   PROMPT (charter text) — which is which, per harness, see the harness docs.
 
 Mechanism per harness (adapter layer): Claude Code = frontmatter `tools:`
 plus the PreToolUse hook (hooks/manager-boundary.sh); OpenCode = ordered
-permission maps, `"*": deny` first; Antigravity = `tools:` whitelist.
+permissions arrays, `"*": deny` first; Antigravity = `tools:` whitelist.
 
 ## Verification ladder
 
@@ -63,6 +63,7 @@ not one worker per edit.
 
 Optional per harness — every agent file pins a default; change via each
 harness's own mechanism.
+OpenCode agents pin the merged form, e.g. `openai/gpt-6-astra#high`.
 
 | Family | Claude (alias) | OpenCode openai preset | OpenCode go preset | Antigravity |
 |---|---|---|---|---|
@@ -97,6 +98,9 @@ harness's own mechanism.
 
 No harness supports includes, so runtime files must be self-contained and
 carry operational copies of their charter and rules. This file is
-canonical; the copies are bounded and acknowledged. Known reduction work:
-backlog item b07 collapses the four duplicated OpenCode worker bash maps
-into one shared top-level permissions array.
+canonical; the copies are bounded and acknowledged. Known accepted
+duplication: the four OpenCode worker shell maps remain identical and
+self-contained per agent (b07, 2026-09-27: the operator chose the safe option —
+no shared top-level block, since it would apply to every agent in the
+config chain and would need installer support to reach agents outside
+this repo).

@@ -6,25 +6,26 @@ Install by copying them to `~/.config/opencode/` (`opencode.jsonc`, `AGENTS.md`,
 Built against OpenCode **1.18.29**; the model split and `external_directory: ask` were applied on 2.0.14 (2026-09-22). Supported: OpenCode 2.x.
 
 ```
-                 orchestrator  (primary, gpt-6-astra, high) — read-only, no bash
-                       │  task: only these seven
+                 orchestrator  (primary, gpt-6-astra, high) — read-only, no shell
+                       │  subagent: only these seven
    ┌────────┬──────────┼────────────┬──────────────────┬───────────┬──────────┐
  explore  scout   mechanical   implementer   hard-implementer   verifier   reviewer
  luna-fast luna     luna          terra            sol            terra       sol
  medium   medium   medium        medium           high           medium      high
- read     read    edit+bash     edit+bash       edit+bash     bash only    read
+ read     read    edit+shell    edit+shell      edit+shell    shell only   read
  only     only   (allow-list)  (allow-list)    (allow-list)  (allow-list)  only
 ```
 
 ## How the boundary is enforced
 
 OpenCode has a **per-agent permission model built in**, so no hook is needed. Every agent
-file starts with `"*": deny` and then allows individual tools:
+file's `permissions:` array starts with a `{ action: "*", resource: "*", effect: deny }`
+item and then allows individual tools:
 
-| Agent | mode | edit | bash | task (spawn) | notes |
+| Agent | mode | edit | shell | subagent (spawn) | notes |
 |---|---|---|---|---|---|
-| `orchestrator` | primary | deny | deny | the seven subagents below only | `question`, `todowrite`, `skill`, MCP prefixes allowed |
-| `mechanical`, `implementer`, `hard-implementer` | subagent, hidden | allow | **ask** by default, allow-list of read-only git and test/lint/typecheck runners, explicit deny of push/reset/checkout/rm/sudo/deploy | deny | same permission map, different model tier; reads `.env*` denied except `.env.example` |
+| `orchestrator` | primary | deny | deny | the seven subagents below only | `question`, `todowrite`, `skill`, MCP prefixes allowed once the operator appends matching allow rules |
+| `mechanical`, `implementer`, `hard-implementer` | subagent, hidden | allow | **ask** by default, allow-list of read-only git and test/lint/typecheck runners, explicit deny of push/reset/checkout/rm/sudo/deploy | deny | same permissions array, different model tier; reads `.env*` denied except `.env.example` |
 | `verifier` | subagent, hidden | deny | same allow-list as the implementers | deny | runs checks, never edits |
 | `reviewer` | subagent, hidden | deny | deny | deny | `question`/`todowrite` denied |
 | `explore`, `scout` | subagent, hidden | deny | deny | deny | `.md` files, same as the rest |
@@ -33,10 +34,11 @@ Other structural settings in `opencode.jsonc`:
 
 * `default_agent: orchestrator` makes the orchestrator the agent you talk to. This is the
   one thing Claude Code and Antigravity do not offer as a plain user-scope setting.
-* `subagent_depth: 1` forbids subagents spawning subagents, the equivalent of no worker
-  having the `Agent` tool in the Claude setup.
-* The built-in `build`, `plan` and `general` agents are **disabled** so nothing with write
-  access is reachable from the primary session except through `implementer`.
+* `experimental.subagent_depth: 1` forbids subagents spawning subagents, the equivalent of
+  no worker having the `Agent` tool in the Claude setup.
+* The built-in `build`, `plan` and `general` agents are **disabled** via
+  `agents.*.disabled: true` so nothing with write access is reachable from the primary
+  session except through `implementer`.
 * Subagents are `hidden: true` so they do not appear as selectable primary agents.
 * `external_directory: ask` everywhere: a tool call outside the workspace prompts instead of
   failing. It was `deny` until 2026-09-22; see the observation below on why that was porous anyway.
@@ -51,8 +53,9 @@ Other structural settings in `opencode.jsonc`:
   a v1 schema that drops `codemode`. Under `mcp.servers.<name>` the flag survives. With the
   default `codemode: true` MCP tools are only reachable through the Code Mode `execute` tool,
   which `"*": deny` hides; with `false` they are direct `<server>_<tool>` tools.
-* **Rule order.** Permission maps become an ordered ruleset where the last match wins. The
-  agent's `<server>_*: allow` entries must come after `"*": deny` in the file, and the
+* **Rule order.** The `permissions:` array is an ordered ruleset where the last match wins. The
+  agent's `- { action: <server>_<tool>, resource: "*", effect: allow }` items are appended
+  after the `{ action: "*", resource: "*", effect: deny }` catch-all in the file, and the
   per-agent `tools:` map must not be used for MCP: the migrator emits its rules before the
   catch-all and drops the later duplicates, which hides every MCP tool again.
 * Verified with a temporary plugin hooking the session `context` event: the orchestrator's
@@ -61,18 +64,19 @@ Other structural settings in `opencode.jsonc`:
 ## Model routing
 
 One provider (`openai/…`) with the model tier doing what the Haiku / Sonnet / Opus / Fable
-split does in the Claude Code layout, and the **variant** field doing what `effort` does:
+split does in the Claude Code layout, and the **variant** suffix doing what `effort` does.
+Both live on a single frontmatter line, `model: provider/model#variant`:
 
-| OpenCode agent | Model | Variant | Claude Code counterpart |
-|---|---|---|---|
-| `orchestrator` | `gpt-6-astra` | high | `manager` (fable) |
-| `explore` | `gpt-6-luna-fast` | medium | `explorer` (haiku) |
-| `scout` | `gpt-6-luna` | medium | `explorer` (haiku), web side |
-| `mechanical` | `gpt-6-luna` | medium | `mechanical-worker` (haiku) |
-| `implementer` | `gpt-5.6-terra` | medium | `worker` (sonnet) |
-| `hard-implementer` | `gpt-6-sol` | high | `hard-worker` (opus) |
-| `verifier` | `gpt-5.6-terra` | medium | `verifier` (sonnet) |
-| `reviewer` | `gpt-6-sol` | high | `reviewer` (opus) |
+| OpenCode agent | `model:` (`provider/model#variant`) | Claude Code counterpart |
+|---|---|---|
+| `orchestrator` | `openai/gpt-6-astra#high` | `manager` (fable) |
+| `explore` | `openai/gpt-6-luna-fast#medium` | `explorer` (haiku) |
+| `scout` | `openai/gpt-6-luna#medium` | `explorer` (haiku), web side |
+| `mechanical` | `openai/gpt-6-luna#medium` | `mechanical-worker` (haiku) |
+| `implementer` | `openai/gpt-5.6-terra#medium` | `worker` (sonnet) |
+| `hard-implementer` | `openai/gpt-6-sol#high` | `hard-worker` (opus) |
+| `verifier` | `openai/gpt-5.6-terra#medium` | `verifier` (sonnet) |
+| `reviewer` | `openai/gpt-6-sol#high` | `reviewer` (opus) |
 
 The premise is the same as in Claude Code: the orchestrator carries the judgment and the
 cheap tiers do the volume. Until 2026-09-22 every agent ran on `gpt-5.6-luna`, the cheapest
@@ -81,7 +85,8 @@ tier, with `max`/`high`/`medium` variants as the only differentiation.
 ## Provider presets
 
 [`opencode/presets/openai.tsv`](../opencode/presets/openai.tsv) and
-[`opencode/presets/go.tsv`](../opencode/presets/go.tsv) list a `model`/`variant` per agent for
+[`opencode/presets/go.tsv`](../opencode/presets/go.tsv) list a 2-column
+`agent<TAB>provider/model[#variant]` row per agent for
 two providers; [`opencode/oc-preset`](../opencode/oc-preset) rewrites all 8 `agents/*.md` files
 in one call:
 
@@ -91,7 +96,7 @@ in one call:
 ~/.config/opencode/oc-preset         # show current models and which preset matches, if any
 ```
 
-This only works because `model`/`variant` live in exactly one place: OpenCode resolves an
+This only works because `model` lives in exactly one place: OpenCode resolves an
 agent's model from `opencode.jsonc` before its `.md` frontmatter, so a value split across both
 places would leave the JSON edit silently ignored. `explore` and `scout` were moved from
 `opencode.jsonc` into `agents/*.md` for this reason (2026-09-22).
@@ -103,9 +108,9 @@ The `go.tsv` rows come from three bench rounds (`opencode/bench/results/20260922
 * Same roles, one split: `explorer` → `explore` (local) + `scout` (web). `mechanical-worker`,
   `worker`, `hard-worker`, `verifier` and `reviewer` map one to one. The orchestrator prompt
   carries the same routing table and verification policy as the manager prompt.
-* Enforcement is **declarative** (permission map) instead of a `PreToolUse` hook. The
-  granularity is finer than Claude's: bash is allow-listed per command pattern and file
-  reads can be denied per glob.
+* Enforcement is **declarative** (permissions array) instead of a `PreToolUse` hook. The
+  granularity is finer than Claude's: shell commands are allow-listed per command pattern and
+  file reads can be denied per glob.
 * The orchestrator prompt carries the same policy items as the manager prompt: no
   overlapping edits across workers, resume the same task by `task_id` instead of spawning a
   duplicate, delegate instead of asking a read-only agent to write.
