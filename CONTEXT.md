@@ -9,6 +9,7 @@
 | Work on Claude Code assets | agents/, hooks/ |
 | Work on Antigravity assets | antigravity/ |
 | Install or remove a harness's orchestration layer | install.sh, uninstall.sh |
+| Start a new project with this workflow | starter/ |
 | Compare harnesses | docs/harness-comparison.md |
 | Run model benchmarks | opencode/bench/ (results are git-ignored) |
 

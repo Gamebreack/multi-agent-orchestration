@@ -27,6 +27,7 @@ for routing and stages/ for the workflow.
 | The shared policies (roles, permissions, verification, models) | [docs/policies.md](docs/policies.md) |
 | How the three harnesses compare | [docs/harness-comparison.md](docs/harness-comparison.md) |
 | Optional model presets | opencode/presets/ + opencode/oc-preset |
+| Start a new project with this workflow | starter/ |
 | OpenCode setup | [docs/opencode.md](docs/opencode.md) |
 | Antigravity setup | [docs/antigravity.md](docs/antigravity.md) |
 | Claude Code notes and history | [docs/claude-code-observations.md](docs/claude-code-observations.md) |
