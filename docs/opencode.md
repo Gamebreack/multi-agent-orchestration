@@ -2,7 +2,7 @@
 
 Files: [`opencode/opencode.jsonc`](../opencode/opencode.jsonc),
 [`opencode/agents/*.md`](../opencode/agents), [`opencode/AGENTS.md`](../opencode/AGENTS.md).
-Install by copying them to `~/.config/opencode/` (`opencode.jsonc`, `AGENTS.md`, `agents/`).
+Install with `./install.sh opencode` (copies agents/, oc-preset, presets/ and AGENTS.md to `~/.config/opencode/`, backing up any existing file that differs; `OPENCODE_CONFIG_DIR` overrides the target). Config wiring (opencode.jsonc) and personal MCP allow rules stay manual — see the orchestrator template's permissions comment.
 Built against OpenCode **1.18.29**; the model split and `external_directory: ask` were applied on 2.0.14 (2026-09-22). Supported: OpenCode 2.x.
 
 ```

@@ -38,13 +38,14 @@ for routing and stages/ for the workflow.
 
 1. Clone this repo.
 2. Pick your harness:
-   - **Claude Code**: `./install.sh` (agents + hook + settings merge;
-     remove with `./uninstall.sh`). Launch: `claude --agent manager`.
-   - **OpenCode**: copy `opencode/agents/` to `~/.config/opencode/agents/`,
+   - **Claude Code**: `./install.sh claude` (agents + hook + settings merge;
+     needs jq; remove with `./uninstall.sh claude`). Launch: `claude --agent manager`.
+   - **OpenCode**: `./install.sh opencode` (agents, oc-preset, presets, AGENTS.md);
      wire `opencode/opencode.jsonc` per docs/opencode.md, then pick models
      with `opencode/oc-preset`.
-   - **Antigravity**: follow docs/antigravity.md (multitask-team/ plugin;
-     `antigravity/agyo` launcher).
+   - **Antigravity**: `./install.sh antigravity` (plugin + `agyo`); enable the
+     plugin per docs/antigravity.md.
+   Uninstall skips files you edited since installing; add --purge to remove them anyway (backed up first).
 3. Read [docs/policies.md](docs/policies.md) before changing anything.
 
 ## Support status

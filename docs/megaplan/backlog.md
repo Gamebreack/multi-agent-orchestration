@@ -20,6 +20,6 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
-| b04 | Harness-explicit, backup-aware installation and safe uninstall for all three harnesses | pending | — |
+| b04 | Harness-explicit, backup-aware installation and safe uninstall for all three harnesses | in-progress | [backlog-items/b04.md](backlog-items/b04.md) |
 | b05 | Reusable ICM starter workspace with onboarding and one worked example | pending | — |
 | b06 | Independent review and isolated validation with tested-vs-pending OS/harness support matrix | pending | — |

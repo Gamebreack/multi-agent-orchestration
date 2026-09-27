@@ -1,8 +1,9 @@
 # Antigravity CLI (`agy`): the `multitask-team` plugin
 
 Files: [`antigravity/multitask-team/`](../antigravity/multitask-team) — `plugin.json`,
-`rules/AGENTS.md`, `agents/<name>/agent.md`. Install by copying the directory to
-`~/.gemini/config/plugins/multitask-team/` and enabling it in `~/.gemini/config/config.json`
+`rules/AGENTS.md`, `agents/<name>/agent.md`.
+Install with `./install.sh antigravity` (copies the plugin to `~/.gemini/config/plugins/multitask-team/` and `agyo` to `~/.local/bin/`, backing up any existing file that differs; `GEMINI_CONFIG_DIR`/`AGYO_BIN_DIR` override the targets).
+Enable it in `~/.gemini/config/config.json`
 (`{"plugins": {"multitask-team": {"enabled": true}}}`). Launch with
 [`antigravity/agyo`](../antigravity/agyo), a wrapper that refuses to start unless
 `agy agents` lists the orchestrator (plain `agy --agent orchestrator-agent` falls back to the
