@@ -15,12 +15,12 @@ As-built, no backlog rows for any of this:
 
 - Eight OpenCode agent definitions (`opencode/agents/`) + an `AGENTS.md` note + the `oc-preset`
   model-switching helper (`opencode/oc-preset`) + openai/go presets (`opencode/presets/`).
-- Claude Code manager setup: seven agents (`agents/`) + the `manager-boundary.sh` hook (`hooks/`)
-  + `install.sh`/`uninstall.sh` scripts at the repo root.
+- Claude Code manager setup: seven agents (`agents/`) + the `manager-boundary.sh` hook (`hooks/`).
+- Cross-harness installers (b04, 2026-09-27): ./install.sh and ./uninstall.sh take a harness argument (claude|opencode|antigravity); install is backup-then-copy, uninstall removes only files byte-identical to the repo's (skip + warn on user edits; --purge overrides with a backup); config wiring and personal MCP rules stay manual
 - Antigravity CLI assets (`antigravity/`).
 - Harness comparison and per-harness docs (`docs/harness-comparison.md`, `docs/opencode.md`,
   `docs/claude-code-observations.md`, `docs/antigravity.md`).
-- docs/megaplan/ planning system (megaplan skill): backlog (b04–b06 pending), glossary, done
+- docs/megaplan/ planning system (megaplan skill): backlog (b05–b06 pending), glossary, done
   ledger — b01 closed 2026-09-25 with the hybrid ICM architecture decision (ICM stages organize
   work, specialist agents execute it).
 - Hybrid ICM structure (b02, 2026-09-26): root AGENTS.md (layer 0) + CONTEXT.md (layer 1) + stages/01-intake…05-release stage contracts; work items flow intake → design → implement → verify → release
@@ -31,7 +31,7 @@ As-built, no backlog rows for any of this:
   `https://github.com/Gamebreack/multi-agent-orchestration.git`, initial commit made 2026-09-25,
   nothing pushed; `.gitignore` excludes generated artifacts; `.env.example` documents the bench
   collector env var.
-- Negatives: no OpenCode installer, no starter workspace, no cross-platform
+- Negatives: no starter workspace, no cross-platform
   validation, nothing pushed.
 
 When an item changes what exists, edit the line it affects rather than appending a new one.
