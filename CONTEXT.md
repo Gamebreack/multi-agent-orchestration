@@ -10,6 +10,7 @@
 | Work on Antigravity assets | antigravity/ |
 | Install or remove a harness's orchestration layer | install.sh, uninstall.sh |
 | Start a new project with this workflow | starter/ |
+| Check what is validated on which platform | docs/validation.md |
 | Compare harnesses | docs/harness-comparison.md |
 | Run model benchmarks | opencode/bench/ (results are git-ignored) |
 
@@ -21,7 +22,7 @@ names the executing agent tier:
 | Stage | Job | Executed by | Operator checkpoint |
 |---|---|---|---|
 | stages/01-intake/ | request → backlog item | orchestrator + mechanical worker | scope confirmed |
-| stages/02-design/ | inspect + proposal | explore / scout + mechanical worker | plan approved |
+| stages/02-design/ | inspect + proposal | explore / scout + orchestrator + mechanical worker | plan approved |
 | stages/03-implement/ | delegated edits | mechanical / implementer / hard-implementer (delegated by orchestrator) | — |
 | stages/04-verify/ | independent check | verifier / reviewer + mechanical worker | verdict read |
 | stages/05-release/ | ledger + commit + push | orchestrator + worker | push authorized |

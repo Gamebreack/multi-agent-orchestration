@@ -20,4 +20,4 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
-| b06 | Independent review and isolated validation with tested-vs-pending OS/harness support matrix | pending | — |
+| b06 | Independent review and isolated validation with tested-vs-pending OS/harness support matrix | in-progress | [backlog-items/b06.md](backlog-items/b06.md) |

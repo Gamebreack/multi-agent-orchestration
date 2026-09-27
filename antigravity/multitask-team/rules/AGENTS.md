@@ -16,6 +16,7 @@ This system operates under an Orchestrator-Worker architecture enforcing the pri
 * **Verification & QA (`reviewer-agent`)**:
   * Inspects diffs and executes automated test suites (`pytest`, `npm test`, `cargo test`), linters (`ruff`, `eslint`), and typecheckers via `run_command`.
   * **Shell-Write Prohibition**: Must NEVER execute shell commands that write, delete, or alter files (e.g. `>`, `>>`, `rm`, `sed -i`, `mv`, `touch`, `tee`). Terminal usage is strictly reserved for non-mutating test runners and diagnostics.
+  * Never run git commit, git push, or any version-control state change (reset, checkout, rebase, merge); commits and pushes are operator-authorized.
   * Verifies changes pass before the orchestrator reports completion to the user.
 * **Research & Web Search (`researcher-agent`)**:
   * Investigates third-party APIs, library documentation, and web sources.

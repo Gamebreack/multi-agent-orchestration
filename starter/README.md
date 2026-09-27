@@ -27,6 +27,8 @@ repo this starter came from).
   tree; nothing else carries state.
 - Checkpoints (operator gates) sit in stages 01, 02, 04, 05; implement (03)
   runs without one.
+- The starter assumes git for the release stage; adapt stage 05 for another
+  version-control system.
 
 ## Worked example
 

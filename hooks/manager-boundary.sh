@@ -12,7 +12,7 @@
 #
 # Enforcement is an ALLOW-LIST: only inspection / coordination / delegation tools pass;
 # everything else (Edit, Write, NotebookEdit, Bash, PowerShell, Monitor, Workflow, worktree
-# tools, unknown or renamed tools, any MCP server other than Asana/ai-memory/Supabase/n8n) is denied with a useful
+# tools, unknown or renamed tools, any MCP server not explicitly allowed) is denied with a useful
 # reason. Agent spawns are limited to the declared roles. Structured hook JSON is used; no
 # fragile text matching on prompts.
 #
@@ -99,15 +99,15 @@ case "$tool" in
     deny "manager-boundary: the Manager may only delegate to explorer, mechanical-worker, worker, hard-worker, reviewer or verifier (got subagent_type='${subagent:-<none>}'). Pick the appropriate declared role; do not create ad-hoc agents or forks." ;;
   mcp__*)
     # MCP is an ALLOW-LIST too: only coordination servers the manager is meant to use
-    # pass (Asana for card updates, ai-memory for long-term memory, Supabase and n8n for
-    # inspecting external systems). Every other MCP server — including any future
-    # file-editing, git, shell or code-execution server — is denied for the manager.
+    # pass (card updates, long-term memory, inspecting external systems). Every other
+    # MCP server — including any future file-editing, git, shell or code-execution
+    # server — is denied for the manager.
     # Add a server deliberately as: mcp__<server>__*
     case "$tool" in
-      mcp__asana__*|mcp__ai-memory__*|mcp__claude_ai_Supabase__*|mcp__supabase-dev__*|mcp__supabase-prod__*|mcp__n8n__*) log allow-mcp; exit 0 ;;
+      # allow your own servers here, e.g.: mcp__<server>__*) log allow-mcp; exit 0 ;;
       *)
         log deny-mcp
-        deny "manager-boundary: MCP tool '$tool' is not on the Manager's coordination allow-list (Asana, ai-memory, Supabase, n8n). If it mutates the repository, delegate to a worker; if it is a new coordination server, add mcp__<server>__* to the hook." ;;
+        deny "manager-boundary: MCP tool '$tool' is not on the Manager's coordination allow-list (none by default). If it mutates the repository, delegate to a worker; if it is a new coordination server, add mcp__<server>__* to the hook." ;;
     esac ;;
   Edit|Write|MultiEdit|NotebookEdit|Bash|PowerShell|Monitor|Workflow|EnterWorktree|ExitWorktree|*)
     log deny

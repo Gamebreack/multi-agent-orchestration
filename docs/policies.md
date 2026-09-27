@@ -20,7 +20,7 @@ self-contained with, and defer to this file as canonical.
 | Primary | Plans, delegates, reconciles; never edits, no shell | agents/manager.md | opencode/agents/orchestrator.md | multitask-team/agents/orchestrator-agent/ |
 | Discovery | Read-only codebase and external research | agents/explorer.md | opencode/agents/explore.md + scout.md | researcher-agent/, planner-agent/ |
 | Mechanical | Deterministic, well-specified edits only | agents/mechanical-worker.md | opencode/agents/mechanical.md | — |
-| Implementation | Default implementation and repair | agents/worker.md | opencode/agents/implementer.md | writer-agent/ (no shell) |
+| Implementation | Default implementation and repair | agents/worker.md | opencode/agents/implementer.md | writer-agent/ (no shell), documenter-agent/ |
 | Hard implementation | Genuinely difficult work only | agents/hard-worker.md | opencode/agents/hard-implementer.md | — |
 | Review | Independent adversarial read-only review | agents/reviewer.md | opencode/agents/reviewer.md | reviewer-agent/ |
 | Verification | Runs tests/builds/lint; reports, never fixes | agents/verifier.md | opencode/agents/verifier.md | merged into reviewer-agent/ |
@@ -36,7 +36,7 @@ that also runs tests): a harness limit, not a policy divergence.
 - Edits happen only through delegated workers; verification never edits.
 - Workers never commit or push. Commits and pushes are operator-authorized
   (OpenCode also hard-denies `git push*` in the worker shell rules).
-- Enforcement is either HARD (checked by hook or permission map) or
+- Enforcement is either HARD (checked by hook or permissions array) or
   PROMPT (charter text) — which is which, per harness, see the harness docs.
 
 Mechanism per harness (adapter layer): Claude Code = frontmatter `tools:`
@@ -93,6 +93,8 @@ OpenCode agents pin the merged form, e.g. `openai/gpt-6-astra#high`.
 | Claude Code | ≥ 2.1.263 | 2.1.263 |
 | OpenCode | 2.x (V2 `mcp.servers` semantics) | 2.0.14 (features); 1.18.29 baseline |
 | Antigravity CLI | 1.1.x | 1.1.27 |
+
+Platform validation status (Linux validated; macOS/WSL pending): docs/validation.md.
 
 ## Known bounded duplication
 

@@ -51,8 +51,8 @@ for routing and stages/ for the workflow.
 
 ## Support status
 
-Linux validated end-to-end on all three harnesses. macOS and WSL:
-untested — see docs/megaplan/backlog.md (b06 validation matrix).
+Linux validated end-to-end on all three harnesses; macOS and WSL pending —
+see [docs/validation.md](docs/validation.md).
 
 Nothing here auto-installs personal config: no MCP endpoints, no
 credentials — only commented placeholders (see docs/policies.md,

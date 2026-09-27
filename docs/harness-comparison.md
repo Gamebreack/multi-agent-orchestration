@@ -31,7 +31,7 @@ sessions. Its failure modes were about hooks and auto mode, not about the agents
 
 **OpenCode** has the most complete permission model and needed no extra mechanism: deny by
 default, allow per tool, per bash pattern, per file glob, per MCP prefix, and restrict which
-subagents an agent may `task`. Its trap is discoverability: an MCP server that is connected
+subagents an agent may `subagent`. Its trap is discoverability: an MCP server that is connected
 but not allow-listed simply has no tools, with no error
 (see [opencode.md](opencode.md)).
 
