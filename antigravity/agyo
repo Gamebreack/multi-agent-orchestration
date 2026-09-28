@@ -13,7 +13,7 @@ fi
 before=$(ls -t "$LOGDIR"/cli-*.log 2>/dev/null | head -1)
 agy --agent "$AGENT" "$@"; rc=$?
 after=$(ls -t "$LOGDIR"/cli-*.log 2>/dev/null | head -1)
-if [ -n "$after" ] && [ "$after" != "$before" ] && grep -q 'falling back to default' "$after"; then
+if [ -n "$after" ] && [ "$after" != "$before" ] && grep -q 'not found, falling back to default' "$after"; then
   echo "agyo: WARNING — that session ran the DEFAULT agent (log: $after)." >&2
 fi
 exit $rc

@@ -111,14 +111,14 @@ What actually ran in every "orchestrator" session, therefore, was the **default 
   to the workspace was not in effect (one ad-hoc writer populated a user-wide directory).
 
 Nothing in the TUI distinguishes this from the real plugin. The only reliable check is the
-log line: `grep 'falling back' ~/.gemini/antigravity-cli/cli.log` after launch.
+log line: `grep 'not found, falling back' ~/.gemini/antigravity-cli/cli.log` after launch.
 
 **Fix applied 2026-09-08.** Each agent was rewritten as `agents/<name>/agent.md`
 (frontmatter `name`, `description`, `tools`, `subagent`, `hidden`, `model: pro` for the
 planner; body = former prompt sections). The old JSON is kept under
 `antigravity/legacy-json/` as the record of what did not load. Verified after install:
 
-* `agy agents` lists all six agents; no `falling back` line in the launch logs.
+* `agy agents` lists all six agents; no `not found, falling back` line in the launch logs.
 * Orchestrator tool list, reported headlessly: the eleven declared tools + `manage_task`; no
   `write_to_file`, `replace_file_content`, `run_command`, `define_subagent`.
 * Delegation smoke test: "create a file containing PASS, you must not write yourself" produced
