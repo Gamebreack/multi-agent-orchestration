@@ -7,7 +7,8 @@ Two things live here:
   `starter/` is the copyable template for using it in other projects.
 - **agent-core** (in specification) — a generic agent factory: define any
   agent once (prompt, model provider, allowed tools and MCPs, who may use
-  it), package it as a container, and deploy it to any Docker host.
+  it), package it as a container, and deploy it to any Docker host
+  reachable over SSH.
 
 ## What is where
 
