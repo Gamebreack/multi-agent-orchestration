@@ -1,9 +1,7 @@
 # ICM starter workspace
 
 Copy this directory into any project to get a hybrid-ICM workflow: numbered
-stages organize each work item; specialist agents execute the stage work
-(the toolkit's agents — see docs/policies.md in the multi-agent-orchestration
-repo this starter came from).
+stages organize each work item; specialist agents execute the stage work.
 
 ## Use it
 

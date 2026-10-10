@@ -1,9 +1,9 @@
 # multi-agent-orchestration — repo conventions
 
 Layer 0 of this repo's ICM structure; read CONTEXT.md next for routing. The
-harness-specific agent definitions in opencode/, agents/ (Claude Code) and
-antigravity/ are the toolkit this repo ships — they are not instructions for
-working on this repo.
+repo holds two things: the hybrid ICM workflow (run live here, and shipped
+as the reusable starter in starter/) and agent-core, an agent factory being
+specified under openspec/.
 
 ## How work happens here
 

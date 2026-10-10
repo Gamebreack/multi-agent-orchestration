@@ -5,14 +5,8 @@
 | Read repo conventions | AGENTS.md (layer 0) |
 | Start or resume a work item | docs/megaplan/backlog.md, then the item's file |
 | Know how an item flows | stages/ (below) |
-| Work on OpenCode agents | opencode/ |
-| Work on Claude Code assets | agents/, hooks/ |
-| Work on Antigravity assets | antigravity/ |
-| Install or remove a harness's orchestration layer | install.sh, uninstall.sh |
+| Work on agent-core (specs, design, tasks) | openspec/changes/agent-core/ |
 | Start a new project with this workflow | starter/ |
-| Check what is validated on which platform | docs/validation.md |
-| Compare harnesses | docs/harness-comparison.md |
-| Run model benchmarks | opencode/bench/ (results are git-ignored) |
 
 ## Stage routing
 
