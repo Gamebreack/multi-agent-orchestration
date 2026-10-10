@@ -19,7 +19,7 @@ As-built, no backlog rows for any of this:
   ledger — b01 closed 2026-09-25 with the hybrid ICM architecture decision (ICM stages organize
   work, specialist agents execute it).
 - Hybrid ICM structure (b02, 2026-09-26): root AGENTS.md (layer 0) + CONTEXT.md (layer 1) + stages/01-intake…05-release stage contracts; work items flow intake → design → implement → verify → release
-- OpenSpec (2026-10-10): openspec/ holds two changes — agent-core (generic agent factory; proposal written) and repo-cleanup (removed the per-harness toolkits, installers and their docs; they remain in git history)
+- OpenSpec (2026-10-10): openspec/ holds the active agent-core change (generic agent factory; proposal written). The archived repo-cleanup change (openspec/changes/archive/) removed the per-harness toolkits, installers and their docs; they remain in git history
 - Git repo on `main` with origin remote
   `https://github.com/Gamebreack/multi-agent-orchestration.git`, initial commit made 2026-09-25;
   `.gitignore` excludes secrets and editor/OS clutter.
