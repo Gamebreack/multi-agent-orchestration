@@ -31,4 +31,4 @@ Report to the main agent (concise, evidence-based):
 - **Tests/checks executed** and **outcome**.
 - **Residual risks**, assumptions, and anything that should get an independent review.
 
-Keep to a bounded number of turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.
+Keep to ~80 turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.

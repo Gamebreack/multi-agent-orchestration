@@ -17,7 +17,7 @@ As-built, no backlog rows for any of this:
   (`core/skills/mao-{scout,mechanical,implementer,hard-implementer,reviewer,verifier,documenter}`),
   `core/skills/mao-setup` (agent-run install/uninstall procedure with backups and a manifest) and
   the opt-in `core/skills/second-brain-interface` template.
-- Harness capability snapshot dated 2026-10-26 (`docs/harness-comparison.md`) and shared policies
+- Shared policies
   (`docs/policies.md`: roles, tiers, access levels, permission philosophy).
 - Reusable ICM starter workspace (b05, 2026-09-27): starter/ — a copyable template (CONTEXT.md + five
   generalized stage contracts + setup questionnaire); this repo's own structure is the worked example.
@@ -27,7 +27,6 @@ As-built, no backlog rows for any of this:
   stages/01-intake…05-release stage contracts; work items flow intake → design → implement → verify →
   release.
 - Git repo on `main` with origin remote `https://github.com/Gamebreack/multi-agent-orchestration.git`.
-- Negatives: no installer scripts, no per-harness files, no manager/orchestrator role, no model IDs
-  outside `docs/harness-comparison.md`.
+- Negatives: no installer scripts, no per-harness files, no manager/orchestrator role, no model IDs.
 
 When an item changes what exists, edit the line it affects rather than appending a new one.

@@ -3,7 +3,7 @@
 One home per fact: this file states every policy that applies across harnesses. The runtime
 source that agents read is `core/AGENTS.md` plus the role skills under `core/skills/`; this
 file is the rationale for them. Harness facts live in
-[harness-comparison.md](harness-comparison.md).
+the harness's live docs.
 
 | Layer | Home |
 |---|---|
@@ -11,7 +11,7 @@ file is the rationale for them. Harness facts live in
 | Runtime instructions | core/AGENTS.md |
 | Role charters | core/skills/mao-<role>/SKILL.md |
 | Install procedure | core/skills/mao-setup/SKILL.md |
-| Harness capabilities (dated snapshot) | docs/harness-comparison.md |
+| Harness capabilities | the harness's live docs |
 | Repo workflow | CONTEXT.md + stages/ |
 | Work backlog | docs/megaplan/ |
 
@@ -40,7 +40,7 @@ Tiers state intent; no model names are committed.
 
 A harness that chooses the model per spawn gets the tier's model from the main agent at
 spawn time; one that fixes it per subagent file gets one chosen by `mao-setup`; one that only
-inherits collapses the tiers to a single model. See harness-comparison.md.
+inherits collapses the tiers to a single model. See the harness's live docs.
 
 ## Access levels
 
@@ -86,5 +86,4 @@ edit. Delegation depth is one: a worker never spawns workers.
 Nothing personal or harness-specific is committed: no model IDs, no harness config files, no
 MCP endpoints, credentials, hostnames or machine paths. `mao-setup` translates the
 tool-neutral content into each harness's native local config on the user's machine, records
-what it did in a manifest, and can reverse it. Model names may appear only in
-harness-comparison.md, as harness facts.
+what it did in a manifest, and can reverse it. Model names never appear.

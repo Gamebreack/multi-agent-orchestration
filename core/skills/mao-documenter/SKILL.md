@@ -28,4 +28,4 @@ Report to the main agent (concise, no narration):
 - **Source of truth read** (files/ranges the edits rest on).
 - **Gaps or contradictions** found but not acted on.
 
-Keep to a bounded number of turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.
+Keep to ~25 turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.

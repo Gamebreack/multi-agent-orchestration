@@ -10,7 +10,6 @@
 | Change the optional second-brain template | core/skills/second-brain-interface/ |
 | Start a new project with this workflow | starter/ |
 | Read the shared policies (roles, tiers, access) | docs/policies.md |
-| Compare harness capabilities | docs/harness-comparison.md |
 
 ## Stage routing
 

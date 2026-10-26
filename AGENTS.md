@@ -26,5 +26,4 @@ the toolkit this repo ships (global instructions, role skills, setup procedure)
 - Keep every CONTEXT.md under 80 lines; reference docs under 200.
 - Secrets, personal MCP endpoints, credentials, model IDs, harness-specific
   config and machine-specific paths never enter this repo (portability
-  boundary; see docs/policies.md). Model names appear only in
-  docs/harness-comparison.md.
+  boundary; see docs/policies.md). Model names never appear.

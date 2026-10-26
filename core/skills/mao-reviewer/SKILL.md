@@ -33,4 +33,4 @@ explicitly and state what you checked.
 
 Finish with a one-line verdict: **APPROVE**, **APPROVE WITH FIXES**, or **REQUEST CHANGES**.
 
-Keep to a bounded number of turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.
+Keep to ~30 turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.

@@ -8,7 +8,7 @@ A rename edits the existing row. If a term's code pointer no longer resolves, de
 |---|---|---|
 | ICM | Interpretable Context Methodology; folder structure as agent orchestration | canonical source linked in `docs/megaplan/megaplan.md` |
 | Stage contract | Stage `CONTEXT.md` with Inputs/Process/Outputs | `stages/` (template in `starter/stages/`) |
-| Harness | Agent CLI or app being configured (Claude Code, Codex, OpenCode, …) | `docs/harness-comparison.md` |
+| Harness | Agent CLI or app being configured; its capabilities come from its own live docs | the harness's live docs |
 | Main agent | The agent the user talks to; plans, delegates, reconciles | `core/AGENTS.md` |
 | Role | A `mao-<role>` skill: scout, mechanical, implementer, hard-implementer, reviewer, verifier, documenter | `core/skills/` |
 | Tier | Intent for a role's model: fast, standard or deep (no model names) | `docs/policies.md` |
