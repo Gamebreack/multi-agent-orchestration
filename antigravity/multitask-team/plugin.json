@@ -1,6 +1,0 @@
-{
-  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
-  "name": "multitask-team",
-  "version": "1.1.0",
-  "description": "Multi-agent orchestration architecture featuring a read-only supervisor (orchestrator-agent) and specialized worker agents (writer, reviewer, researcher, documenter, planner)."
-}

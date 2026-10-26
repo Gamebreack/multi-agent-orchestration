@@ -1,11 +1,6 @@
 # Local secrets
 .env
 .env.*
-!.env.example
-!.env.sample
-
-# Generated benchmark run output (includes machine-specific paths and transcripts)
-/opencode/bench/results/
 
 # Python bytecode and caches
 __pycache__/

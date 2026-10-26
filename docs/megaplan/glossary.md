@@ -8,10 +8,10 @@ A rename edits the existing row. If a term's code pointer no longer resolves, de
 |---|---|---|
 | ICM | Interpretable Context Methodology; folder structure as agent orchestration | canonical source linked in `docs/megaplan/megaplan.md` |
 | Stage contract | Stage `CONTEXT.md` with Inputs/Process/Outputs | `stages/` (template in `starter/stages/`) |
-| Harness | Agent CLI being configured (OpenCode, Claude Code, Antigravity) | `docs/harness-comparison.md` |
-| Preset | Named model/variant set for all agents | `opencode/presets/*.tsv` |
-| oc-preset | Script switching agents between presets | `opencode/oc-preset` |
-| Orchestrator | Read-only primary agent | `opencode/agents/orchestrator.md` |
-| Manager | Claude Code equivalent of orchestrator | `agents/manager.md` |
-| Toolkit | This repo's portable deliverable | `README.md` |
-| Portability boundary | Nothing personal enters this repo — no MCP endpoints, credentials, or machine-specific paths; templates carry only commented placeholders | AGENTS.md (hard rules) |
+| Harness | Agent CLI or app being configured (Claude Code, Codex, OpenCode, …) | `docs/harness-comparison.md` |
+| Main agent | The agent the user talks to; plans, delegates, reconciles | `core/AGENTS.md` |
+| Role | A `mao-<role>` skill: scout, mechanical, implementer, hard-implementer, reviewer, verifier, documenter | `core/skills/` |
+| Tier | Intent for a role's model: fast, standard or deep (no model names) | `docs/policies.md` |
+| Access level | read-only, read+shell, edit or edit+shell; mapped to native tool limits by mao-setup | `docs/policies.md` |
+| Toolkit | This repo's portable deliverable (`core/`) | `README.md` |
+| Portability boundary | Nothing personal or harness-specific enters this repo — no MCP endpoints, credentials, model IDs or machine-specific paths | AGENTS.md (hard rules) |

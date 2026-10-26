@@ -1,8 +1,0 @@
-orchestrator	openai/gpt-6-astra#high
-hard-implementer	openai/gpt-6-sol#high
-reviewer	openai/gpt-6-sol#high
-implementer	openai/gpt-5.6-terra#medium
-verifier	openai/gpt-5.6-terra#medium
-mechanical	openai/gpt-6-luna#medium
-scout	openai/gpt-6-luna#medium
-explore	openai/gpt-6-luna-fast#medium

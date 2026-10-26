@@ -1,75 +1,66 @@
-# One idea, three harnesses
+# Harness capability snapshot (2026-10-26)
 
-The goal is the same everywhere: **the agent you talk to cannot change the repository.**
-It reads, plans, delegates, and reconciles; only subagents edit, and verification runs in a
-fresh context. This page compares how Claude Code, OpenCode and Antigravity CLI let you
-express that, as of September 2026.
+What `mao-setup` needs to know about each harness, from official docs as of 2026-10-26.
+It is a dated snapshot, not a contract: harnesses change names and paths fast, so
+`mao-setup` re-reads the live docs and trusts them over this table. This is the only file in
+the repo that may name models or harness-specific paths.
 
-| | Claude Code 2.1.263 | OpenCode 2.x (validated 2.0.14) | Antigravity CLI 1.1.27 |
-|---|---|---|---|
-| Agent definition | `~/.claude/agents/<name>.md` (frontmatter + prompt) | `~/.config/opencode/agents/<name>.md` + `opencode.jsonc` | `agents/<name>/agent.md` (markdown + frontmatter), global, workspace or plugin; shared `rules/AGENTS.md` |
-| Orchestrator selection | `claude --agent manager` (per-project default possible via `.claude/settings.json`) | `default_agent` in config | `agy --agent orchestrator-agent` on every launch; falls back silently, so use the `agyo` wrapper |
-| Read-only enforcement | frontmatter `tools:` **plus** a `PreToolUse` hook (allow-list, fail-closed) | per-agent permissions arrays, `"*"/"*" → deny` first | frontmatter `tools:` whitelist (verified after the 2026-09-08 rewrite; the earlier JSON format never loaded) |
-| Granularity | tool name; MCP by server prefix in the hook | tool name, shell per command pattern, read per file glob, MCP per prefix | tool name |
-| Who may spawn | manager only: `Agent(<six roles>)` | `subagent` rules on the orchestrator; `experimental.subagent_depth: 1` | orchestrator has `invoke_subagent`; workers do not |
-| Model per role | `model` alias + `effort` | one provider, `model#variant` | `customAgent.model`, else session model |
-| Cheap tier | haiku explorer/mechanical-worker with `maxTurns` | none (variant `medium`) | none pinned |
-| Worker runs its own tests | yes (worker has Bash) | yes, allow-listed commands; others `ask` | **no** — writer has no shell; reviewer runs tests |
-| Independent verification | `verifier` (sonnet) + `reviewer` (opus) | `reviewer` on request | `reviewer-agent`, mandatory in the loop |
-| Retry policy | prompt policy, manager decides | resume same `task_id` with feedback | hard circuit breaker: 3 heal iterations, then escalate |
-| Worktree isolation | native `isolation: "worktree"` per Agent call | not used | not used |
-| Remaining shell loophole | verifier Bash (policy-only) | none for read-only roles; implementer bash is `ask` | reviewer `run_command` (policy-only) |
+## Table
 
-## What each harness taught us
+| Harness | Global instructions | User skills paths | User subagent files | Subagent model choice | Per-subagent tool limits | Model listing | User config | Implication for mao-setup |
+|---|---|---|---|---|---|---|---|---|
+| Claude Code | `~/.claude/CLAUDE.md` (`@` imports; reads `AGENTS.md` only in projects without `CLAUDE.md`) | `~/.claude/skills` | `~/.claude/agents/*.md` | per-spawn `model` param (aliases haiku/sonnet/opus/inherit) + frontmatter | `tools` / `disallowedTools` | n/a (aliases) | `~/.claude/settings.json` | Write a `CLAUDE.md` stub importing `core/AGENTS.md`; link skills into `~/.claude/skills` too; per-spawn model, so `model: inherit` |
+| Codex | `~/.codex/AGENTS.md` | `~/.agents/skills` | `~/.codex/agents/*.toml` (`name`, `description`, `developer_instructions`, `model`, `model_reasoning_effort`) | per-spawn, then `[agents]` defaults, then parent; a custom name overrides built-ins (`default`, `worker`, `explorer`) | sandbox / `skills.config` | none | `~/.codex/config.toml` | Skills only in `~/.agents/skills`; TOML subagents; per-spawn model, so inherit; avoid the built-in names |
+| OpenCode | `~/.config/opencode/AGENTS.md` | `~/.config/opencode/skills`, `~/.claude/skills`, `~/.agents/skills` | `~/.config/opencode/agents/*.md` (`mode: subagent`) | per agent; else the primary's model | `permission` | `opencode models` | `opencode.json(c)` | Per-agent model: pick tier models from `opencode models` |
+| Cursor | project `AGENTS.md` / `CLAUDE.md`; user rules in Settings UI (no file) | `~/.agents/skills`, `~/.cursor/skills`, `~/.claude/skills`, `~/.codex/skills` | `~/.cursor/agents/*.md` (also reads `~/.claude/agents`, `~/.codex/agents`) | frontmatter `model` (default inherit); parent can name a model at launch | `readonly: true` | `agent models` / `--list-models` | `~/.cursor/cli-config.json` | No global file: tell the user to paste it; inherit plus per-launch model |
+| Gemini CLI (replaced by Antigravity CLI for unpaid / Google One users from 2026-06-18) | `~/.gemini/GEMINI.md` (`AGENTS.md` via `context.fileName`) | `~/.gemini/skills`, `~/.agents/skills` | `~/.gemini/agents/*.md` | per agent / `agents.overrides` | `tools` allowlist | none | `~/.gemini/settings.json` | Point `context.fileName` at `AGENTS.md` or link `GEMINI.md`; per-agent model; check which CLI is installed |
+| GitHub Copilot (CLI + VS Code) | `~/.copilot/copilot-instructions.md` (`AGENTS.md` repo-level; `COPILOT_CUSTOM_INSTRUCTIONS_DIRS`) | `~/.copilot/skills`, `~/.claude/skills`, `~/.agents/skills` | `~/.copilot/agents/*.agent.md` (VS Code also `~/.claude/agents`) | per-spawn explicit model | `tools` list | `copilot help` | `~/.copilot/settings.json` | Per-spawn model, so inherit; `.agent.md` suffix |
+| Devin Desktop/CLI (formerly Windsurf; Cascade legacy) | `~/.config/devin/AGENTS.md` (Cascade: `~/.codeium/windsurf/memories/global_rules.md`) | `~/.config/devin/skills`, `~/.agents/skills` | `~/.config/devin/agents/<name>.md` | per agent (profile); unset falls to server router | `allowed-tools` | `/model` only | `~/.config/devin/config.json` | Per-agent model, chosen by asking the user (no list CLI) |
+| Cline | `~/.agents/AGENTS.md` + global rules dirs | `~/.cline/skills` | built-in `spawn_agent` only | inherit (undocumented) | by mode | none | `~/.cline/data/settings/*.json` | No role subagents; link skills into `~/.cline/skills`; tiers collapse |
+| Kilo Code | `instructions` key in `~/.config/kilo/kilo.jsonc` | `~/.kilo/skills`, `~/.agents/skills` | `~/.config/kilo/agents/*.md` | per agent, else inherit | `permission` allow/ask/deny | `/models` (TUI) | `kilo.jsonc` | Add `core/AGENTS.md` to `instructions`; per-agent model, else inherit |
+| Amp | `~/.config/amp/AGENTS.md` | `~/.agents/skills` (+ others) | plugins only | inherit only (mode low..ultra) | global only | none | `~/.config/amp/settings.json` | No role subagents; tiers collapse |
+| Factory Droid | `AGENTS.md` under `~/.factory/` | `~/.factory/skills`, `~/.agents/skills` | `~/.factory/droids/*.md` | per droid, or per-spawn `complexity` light/medium/heavy mapped by `subagentModelSettings` | `tools` array / category | none | `~/.factory/settings.json` | Map tiers to light/medium/heavy or per-droid model |
+| Goose | `AGENTS.md` / `.goosehints` in `~/.config/goose/` | `~/.agents/skills` | `~/.agents/agents/*.md` | per agent | none | none | `~/.config/goose/config.yaml` | Per-agent model by asking the user; no tool limits, so access levels are prompt-only |
+| Kiro | `~/.kiro/steering/AGENTS.md` | `~/.kiro/skills` | `~/.kiro/agents/` (json/md) | per agent | tools + permissions | `kiro-cli chat --list-models --format json` | `~/.kiro/settings/cli.json` | Link skills into `~/.kiro/skills`; tier models from the listing |
+| Junie | `~/.junie/AGENTS.md` | `~/.junie/skills`, `~/.agents/skills` | `~/.junie/agents/*.md` | per agent, else `SameModelOnly` / `Auto` | `tools` / `disallowedTools` | none | `~/.junie/config.json` | Per-agent model by asking, or leave on Auto |
+| Roo Code | shut down 2026-05-15 (secondary source) | | | | | | | Not supported |
 
-**Claude Code** needs two layers because frontmatter `tools:` alone is not checked for MCP
-servers, renamed tools, or the `Agent` target type; the hook covers those. In exchange it is
-the only one of the three where the *main* session identifies itself to hooks
-(`agent_type`), so a single global hook can enforce the boundary without touching other
-sessions. Its failure modes were about hooks and auto mode, not about the agents
-(see [claude-code-observations.md](claude-code-observations.md)).
+Reading the last column: **per-spawn** model choice means the subagent file says `inherit`
+and the main agent names the tier's model at spawn time; **per-agent** means `mao-setup`
+writes a concrete model per tier; **inherit-only** means the tiers collapse to one model and
+the plan must say so.
 
-**OpenCode** has the most complete permission model and needed no extra mechanism: deny by
-default, allow per tool, per bash pattern, per file glob, per MCP prefix, and restrict which
-subagents an agent may `subagent`. Its trap is discoverability: an MCP server that is connected
-but not allow-listed simply has no tools, with no error
-(see [opencode.md](opencode.md)).
+## Sources
 
-**Antigravity** enforces through a tool whitelist, which is simple and effective but coarse:
-there is no "bash but only tests", so the writer gets no shell at all and every verification
-is a second agent. Its trap is the silent fallback when `--agent` names a non-existent agent
-(see [antigravity.md](antigravity.md)).
+- Claude Code: code.claude.com/docs/en/{memory,sub-agents}
+- Codex: learn.chatgpt.com/docs/{build-skills,agent-configuration/subagents}
+- OpenCode: opencode.ai/docs/{skills,agents}
+- Cursor: cursor.com/docs/context/{subagents,skills,rules}, cursor.com/docs/cli/reference/{parameters,configuration}
+- Gemini CLI: geminicli.com/docs/{core/subagents,cli/skills,cli/gemini-md,reference/configuration}
+- GitHub Copilot: docs.github.com/en/copilot/reference/custom-agents-configuration, docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/{add-custom-instructions,create-skills}, code.visualstudio.com/docs/copilot/agents/subagents
+- Devin: docs.devin.ai/{desktop/devin-local,cli/subagents,cli/models}
+- Cline: docs.cline.bot/features/{skills,subagents}
+- Kilo Code: kilo.ai/docs/customize/{custom-subagents,skills}
+- Amp: ampcode.com/docs/{customize/agents-md,customize/skills,models-and-subagents}
+- Factory Droid: docs.factory.com/cli/configuration/{custom-droids,settings,skills}
+- Goose: goose-docs.ai/docs/guides/context-engineering/{custom-agents,using-skills}
+- Kiro: kiro.dev/docs/{custom-agents/subagents,steering}
+- Junie: junie.jetbrains.com/docs/{junie-cli-subagents,agent-skills,junie-cli-configuration}.html
 
-## Design choices that carried across all three
+## Observed on Claude Code 2.1.263 (September 2026)
 
-* Read-only orchestrator with **no shell at all**; no attempt to classify commands as safe.
-* Delegation depth of one: no worker can spawn workers.
-* Review and verification always in a **fresh** agent, never by the author.
-* Workers get a self-contained brief: goal, in/out-of-scope paths, acceptance criteria,
-  required verification, and must report files changed + commands run + failures.
-* Prompt-level rules that no harness enforces yet: no overlapping edits between concurrent
-  workers, no worker commits (push is hard-denied on OpenCode), a cap on concurrent implementers.
+Behaviors from earlier validation that affect setup:
 
-## What the logs say about each boundary in practice
-
-* **Claude Code**: the hook never had to deny a manager edit; what fired was auto-mode's
-  classifier on *worker* commands, and a pre-existing Stop hook inside subagents.
-* **OpenCode**: the orchestrator never attempted `edit`/`bash` in 17 sessions. The rule that
-  did fire was `external_directory: deny`, and the implementer routed around it with
-  `bash` + `python -c`, so a directory boundary only holds for agents without a shell.
-* **Antigravity**: until 2026-09-08 no boundary existed. The plugin's `agent.json` files were
-  not the format the CLI scans (it wants `agents/<name>/agent.md`), so every `--agent
-  orchestrator-agent` launch silently fell back to the default, fully privileged agent, which
-  read the plugin's rules, claimed to be the orchestrator, and built its own write-enabled
-  subagents with `define_subagent`. After the markdown rewrite the `tools:` whitelist holds
-  (verified by tool listing, a delegation smoke test and a scoping probe). The terminal
-  sandbox blocked the reviewer's `git commit` with a read-only `.git`.
-
-Details and numbers: [opencode.md](opencode.md#observations-from-the-session-logs),
-[antigravity.md](antigravity.md#observations-from-the-conversation-logs),
-[claude-code-observations.md](claude-code-observations.md).
-
-## Pending
-
-Subjective assessments (orchestration quality, reviewer value, latency of the mandatory
-review hop in Antigravity) are deferred to a follow-up discussion.
+- **User-scope agents appear in every session's agent list.** A role description that says
+  when to use it keeps ordinary sessions from routing to it by accident.
+- **`LSP` is stripped from background subagents**, so read-only roles effectively have
+  read/search only.
+- **Hooks run inside subagents too.** A user-scope Stop or PreToolUse hook that assumes it
+  runs in the main session can block every subagent (one such hook blocked 31 transcripts in
+  a day). Test existing hooks against a subagent transcript before installing agents.
+- **A syntax error in a `matcher: "*"` hook blocks every tool call in every session**, and
+  only the user can undo it. Run `bash -n` on any hook script before installing it.
+- **Auto mode pauses after 3 consecutive classifier blocks.** A subagent's frontmatter
+  `permissionMode` is ignored there; `permissions.allow` rules resolve before the
+  classifier, and the classifier blocks the agent from editing them itself, so the user must
+  apply that change.

@@ -11,11 +11,12 @@ Ledger, close-out commit, push.
 ## Process
 1. The operator writes the done-ledger line (ID, date, one sentence).
 2. Close-out in one commit, with explicit operator authorization: the
-   orchestrator delegates the edits and commit to a worker (the operator
-   approves the permission prompts) — delete the backlog row, delete the
-   item file (it stays reachable in git history), update megaplan.md if
-   the item changed what exists.
-3. The operator pushes (push is operator-only; see AGENTS.md hard rules).
+   main agent delegates the edits to mao-implementer (workers never commit),
+   then makes the commit itself, only on the operator's request, after
+   running the repo's pre-commit hooks (never --no-verify). Delete the
+   backlog row and the item file (it stays reachable in git history); update
+   megaplan.md if the item changed what exists.
+3. The operator pushes (push is operator-only; see core/AGENTS.md Committing).
 
 ## Outputs
 | Artifact | Location | Format |

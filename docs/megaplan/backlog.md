@@ -20,3 +20,4 @@ exists, and deletes both the row here and the item file. This file is live work 
 
 | ID | Title | Status | Item file |
 |---|---|---|---|
+| b08 | Portable core: harness-agnostic, public-safe MAO (core/ instructions + mao-* role skills + mao-setup); retire per-harness installers | review | [backlog-items/b08.md](backlog-items/b08.md) |

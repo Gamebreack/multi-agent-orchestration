@@ -7,12 +7,12 @@ Inspect the touched surfaces and propose the change.
 |---|---|---|---|
 | Item file | `../../<items dir>/<id>.md` | Outcome + Touches | What and where |
 | Project files | paths named in the item's Touches | As named | Current state |
-| External docs | web (scout tier) | When needed | Correct references |
+| External docs | web (mao-scout) | When needed | Correct references |
 
 ## Process
-1. Explore (read-only tier) maps the touched surfaces with file:line evidence.
-2. The orchestrator composes the proposal: files to change, order, risks.
-3. A mechanical-tier worker records the proposal in the item's log and
+1. mao-scout (read-only) maps the touched surfaces with file:line evidence.
+2. The main agent composes the proposal: files to change, order, risks.
+3. mao-mechanical records the proposal in the item's log and
    rewrites the item's scope to current truth (never appending to it).
 
 ## Outputs

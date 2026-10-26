@@ -1,59 +1,70 @@
-# Delegation-first multi-agent orchestration
+# MAO: how I work with coding agents
 
-A portable agent setup for three harnesses in which the primary agent only
-plans, delegates and reconciles — it never modifies the repository — and
-all edits, verification and review happen in scoped specialist subagents.
-Work on this repo itself follows an ICM structure: see [CONTEXT.md](CONTEXT.md)
-for routing and stages/ for the workflow.
+A portable, harness-agnostic agent setup. One set of instructions and role skills; your agent
+translates them into whatever harness it runs in (Claude Code, Codex, OpenCode, Cursor, and
+more). Nothing here is tied to a vendor, a model ID, or a person.
+
+The main agent plans, delegates and reconciles. Role agents do the work, each on the
+cheapest tier that can do it reliably. Tiers state intent (fast, standard, deep), not models.
 
 ```
-                         MANAGER  (fable, high) — orchestration only
-                            │
-          ┌─────────────────┼──────────────────┐
-          │                 │                  │
-      explorer         implementers        verification
-       haiku                │                  │
-                    ┌───────┼────────┐    ┌────┴─────┐
-                    │       │        │    │          │
-            mechanical-  worker  hard-  reviewer  verifier
-              worker     sonnet  worker   opus     sonnet
-               haiku              opus
+                      MAIN AGENT: plan, delegate, reconcile
+                                     |
+     +------------+------------+-----+------+-------------+-------------+
+     |            |            |            |             |             |
+  scout       mechanical   implementer   hard-impl.    reviewer      verifier
+  fast        fast         standard      deep          deep          standard
+  read-only   edit+shell   edit+shell    edit+shell    read-only     read+shell
+                                                                   (+ documenter: fast, docs only)
 ```
 
-## What is where
+Workers never commit or push. Review and verification run in a fresh context and never edit.
+Before any commit, the repo's pre-commit hooks run; they are never bypassed.
 
-| You want... | Go to |
+## What is in the repo
+
+| Path | What |
 |---|---|
-| The shared policies (roles, permissions, verification, models) | [docs/policies.md](docs/policies.md) |
-| How the three harnesses compare | [docs/harness-comparison.md](docs/harness-comparison.md) |
-| Optional model presets | opencode/presets/ + opencode/oc-preset |
-| Start a new project with this workflow | starter/ |
-| OpenCode setup | [docs/opencode.md](docs/opencode.md) |
-| Antigravity setup | [docs/antigravity.md](docs/antigravity.md) |
-| Claude Code notes and history | [docs/claude-code-observations.md](docs/claude-code-observations.md) |
-| Repo routing and workflow | [CONTEXT.md](CONTEXT.md), stages/ |
-| Work backlog | docs/megaplan/ |
-| Model benchmarks | opencode/bench/ (results are git-ignored) |
+| `core/AGENTS.md` | Global instructions: communication, roles by tier, delegation rules |
+| `core/skills/mao-<role>/` | Seven role charters (scout, mechanical, implementer, hard-implementer, reviewer, verifier, documenter) |
+| `core/skills/mao-setup/` | The install/uninstall procedure your agent runs |
+| `core/skills/second-brain-interface/` | Optional template for a Second Brain MCP server |
+| `docs/policies.md` | Roles, tiers, access levels, permission philosophy |
+| `docs/harness-comparison.md` | Dated capability snapshot of 14 harnesses, with sources |
+| `starter/` | Copyable ICM workspace template for other projects |
+| `AGENTS.md`, `CONTEXT.md`, `stages/`, `docs/megaplan/` | How work on this repo itself is run |
 
-## Quick start
+## Install
 
-1. Clone this repo.
-2. Pick your harness:
-   - **Claude Code**: `./install.sh claude` (agents + hook + settings merge;
-     needs jq; remove with `./uninstall.sh claude`). Launch: `claude --agent manager`.
-   - **OpenCode**: `./install.sh opencode` (agents, oc-preset, presets, AGENTS.md);
-     wire `opencode/opencode.jsonc` per docs/opencode.md, then pick models
-     with `opencode/oc-preset`.
-   - **Antigravity**: `./install.sh antigravity` (plugin + `agyo`); enable the
-     plugin per docs/antigravity.md.
-   Uninstall skips files you edited since installing; add --purge to remove them anyway (backed up first).
-3. Read [docs/policies.md](docs/policies.md) before changing anything.
+Clone this repo, then tell your agent:
 
-## Support status
+> Read `<repo>/core/skills/mao-setup/SKILL.md` and follow it.
 
-Linux validated end-to-end on all three harnesses; macOS and WSL pending —
-see [docs/validation.md](docs/validation.md).
+The agent detects its harness, reads the harness's current docs, shows a full plan, and
+changes nothing until you approve. Every replaced file is backed up to
+`~/.config/mao/backups/` and every action is recorded in `~/.config/mao/installed.json`.
 
-Nothing here auto-installs personal config: no MCP endpoints, no
-credentials — only commented placeholders (see docs/policies.md,
-Provider prerequisites).
+Uninstall: same prompt with `uninstall`. It reverses the manifest, after showing you the plan.
+
+## Optional dependencies
+
+Each is asked separately (y/N) during install.
+
+- [OpenSpec CLI](https://github.com/Fission-AI/OpenSpec): `npm i -g @fission-ai/openspec`
+- [`verify` skill](https://github.com/Gamebreack/agent-verification)
+- [`megaplan` skill](https://github.com/Gamebreack/megaplan)
+- [`grilling` and `grill-me` skills](https://github.com/mattpocock/skills)
+- Claude Code plugins `ui-ux-pro-max` and `pyright-lsp` (Claude Code only)
+
+## Flagged
+
+- `second-brain-interface` needs a Second Brain MCP server you already run; MAO ships none.
+- Amp and Cline cannot pick a model per subagent, so the tiers collapse to one model there.
+- Cursor has no global instructions file (Settings UI only); you paste or point it yourself.
+- Harness docs change fast; the comparison is a snapshot and `mao-setup` re-reads live docs.
+
+See [docs/policies.md](docs/policies.md) and [docs/harness-comparison.md](docs/harness-comparison.md).
+
+## License
+
+[MIT](LICENSE)

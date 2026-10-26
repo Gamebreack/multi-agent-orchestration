@@ -9,11 +9,11 @@ Independent check in fresh context.
 | Changed files | working tree (uncommitted changes) | Full diff | The result |
 
 ## Process
-1. A fresh verifier (never the author) checks each criterion: PASS/FAIL
+1. A fresh mao-verifier (never the author) checks each criterion: PASS/FAIL
    with exact commands and output.
-2. Ordinary items: verifier. Significant / cross-cutting / risky items:
-   reviewer plus verifier; pre-release: an independent panel.
-3. A mechanical-tier worker logs the verdict and sets the index row to
+2. Ordinary items: mao-verifier. Significant / cross-cutting / risky items:
+   mao-reviewer plus mao-verifier; pre-release: an independent panel.
+3. mao-mechanical logs the verdict and sets the index row to
    review.
 
 ## Outputs
