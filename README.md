@@ -1,8 +1,7 @@
 # MAO: how I work with coding agents
 
 A portable, harness-agnostic agent setup. One set of instructions and role skills; your agent
-translates them into whatever harness it runs in (Claude Code, Codex, OpenCode, Cursor, and
-more). Nothing here is tied to a vendor, a model ID, or a person.
+translates them into whatever harness it runs in (any agent harness). Nothing here is tied to a vendor, a model ID, or a person.
 
 The main agent plans, delegates and reconciles. Role agents do the work, each on the
 cheapest tier that can do it reliably. Tiers state intent (fast, standard, deep), not models.
@@ -30,7 +29,6 @@ Before any commit, the repo's pre-commit hooks run; they are never bypassed.
 | `core/skills/mao-setup/` | The install/uninstall procedure your agent runs |
 | `core/skills/second-brain-interface/` | Optional template for a Second Brain MCP server |
 | `docs/policies.md` | Roles, tiers, access levels, permission philosophy |
-| `docs/harness-comparison.md` | Dated capability snapshot of 14 harnesses, with sources |
 | `starter/` | Copyable ICM workspace template for other projects |
 | `AGENTS.md`, `CONTEXT.md`, `stages/`, `docs/megaplan/` | How work on this repo itself is run |
 
@@ -54,16 +52,16 @@ Each is asked separately (y/N) during install.
 - [`verify` skill](https://github.com/Gamebreack/agent-verification)
 - [`megaplan` skill](https://github.com/Gamebreack/megaplan)
 - [`grilling` and `grill-me` skills](https://github.com/mattpocock/skills)
-- Claude Code plugins `ui-ux-pro-max` and `pyright-lsp` (Claude Code only)
 
 ## Flagged
 
 - `second-brain-interface` needs a Second Brain MCP server you already run; MAO ships none.
-- Amp and Cline cannot pick a model per subagent, so the tiers collapse to one model there.
-- Cursor has no global instructions file (Settings UI only); you paste or point it yourself.
-- Harness docs change fast; the comparison is a snapshot and `mao-setup` re-reads live docs.
+- Where a harness cannot set a model per subagent, the tiers collapse to one model.
+- Where a harness has no global instructions file, setup tells you what to paste.
+- Read-only limits are hard only where the harness can enforce them; otherwise they are instructions.
+- Harness docs change fast; `mao-setup` re-reads the harness's live docs every run.
 
-See [docs/policies.md](docs/policies.md) and [docs/harness-comparison.md](docs/harness-comparison.md).
+See [docs/policies.md](docs/policies.md).
 
 ## License
 

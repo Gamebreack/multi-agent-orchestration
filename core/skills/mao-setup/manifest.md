@@ -38,9 +38,9 @@ action's `dependents`; status stays `applied`. Never create a duplicate action.
 ## Uninstall
 
 1. Read the manifest. Missing or empty: report nothing to reverse and stop.
-2. Scope: default is the current harness only; `--all` (explicit) covers every harness.
-   For each action in scope, an action is reversible only if no harness outside the scope
-   remains in `dependents`; otherwise it is kept, naming the dependents.
+2. Scope: only the current harness's actions. An action is reversible only if no other
+   harness remains in `dependents`; otherwise it is kept, naming the dependents. To clean up
+   another harness, run mao-setup inside that harness.
 3. Build the reverse plan, newest first, and show it in full (dry-run), computing which
    dependents would be removed and which actions would be reversed; write nothing, and
    change no `dependents` or `status` until the user approves. Before each undo,
