@@ -142,8 +142,12 @@ not ship. Link it like any skill.
 3. Apply: backups, then writes, then dependencies. Append each action to the manifest
    immediately.
 4. Verify with evidence: list skills and subagents as the harness sees them, confirm links
-   resolve, then spawn one role (the reviewer) and confirm it follows the charter's report
-   format and cannot edit. Report mismatches; never claim success without this.
+   resolve. Before the smoke test, wait until the harness has registered the new subagents;
+   confirm via its agent list, a registration notice, or a fresh session. A spawn before
+   registration can silently fall back to a general agent with every tool. Then spawn one
+   role (the reviewer) and confirm it follows the charter's report format and cannot edit.
+   A smoke-test spawn with tools beyond the role's access level is a FAILURE, never a pass.
+   Report mismatches; never claim success without this.
 
 ### 5. Retire superseded items
 

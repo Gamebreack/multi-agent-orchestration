@@ -34,4 +34,4 @@ Report to the main agent (evidence-based, no narration):
 - **Warnings / risks** observed (flaky tests, skipped tests, warnings, uncovered paths).
 - **Verdict**: ready / not ready, in one line.
 
-Keep to a bounded number of turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.
+Keep to ~40 turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.

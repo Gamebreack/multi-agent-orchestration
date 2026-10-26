@@ -30,4 +30,4 @@ Report to the main agent (concise, evidence-based, no narration):
 - **Unresolved risks / open questions**.
 - **Out-of-scope observations** (noticed, not done).
 
-Keep to a bounded number of turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.
+Keep to ~60 turns; stop and report if blocked. Your final message is your report to the main agent; write it and stop.
