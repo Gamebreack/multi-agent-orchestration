@@ -98,7 +98,11 @@ into the harness's own user skills directory only if it does not read `~/.agents
 
   Web access: scout yes; other roles none unless a harness default applies. If the harness
   only has coarse limits, pick the closest limit that still lets the role do its job (never
-  make the documenter read-only) and add a prompt-level note for the remainder;
+  make the documenter read-only) and add a prompt-level note for the remainder. Per role,
+  state in the plan which parts of its access level the harness enforces natively and which
+  are prompt-only. Every restriction the harness's docs support must be set natively; a
+  prompt-only claim must cite the doc section or `--help` line showing the restriction is
+  unsupported, and an uncited claim is listed as unverified. Step 4 checks against this;
 - model by the skill's `Tier:` line: per-spawn harness: `inherit`; per-file harness: a model
   per tier from the model list, or ask the user; inherit-only harness: tiers collapse, say
   so in the plan. Where there is a per-file effort field: fast=low, standard=medium,
@@ -119,11 +123,11 @@ exist, list that in the plan and ask the user. Do not use memory of other tools.
 (old instructions, old role agents, hooks or settings entries tied to them). Look for
 candidates in this harness only. Shared locations (`~/.agents/skills` and anything another
 harness might depend on) are never retirement candidates: earlier setups are not in the
-manifest, so nothing proves no other harness uses them. Show each candidate with its content as a `retire` action in this plan, approved
-with everything else. Retire only with approval and a backup; uninstall does not restore it
-unless the user explicitly opts in. If the user edited a candidate or it cannot be
-classified, keep it by default. For a settings entry, remove only that entry and leave
-everything else byte-for-byte.
+manifest, so nothing proves no other harness uses them. Show each candidate with its content
+as a `retire` action in this plan, approved with everything else. Retire only with approval
+and a backup; uninstall does not restore it unless the user explicitly opts in. If the user
+edited a candidate or it cannot be classified, keep it by default. For a settings entry,
+remove only that entry and leave everything else byte-for-byte.
 
 ### 3. Dependencies (ask y/N for each, separately)
 
@@ -158,7 +162,15 @@ not ship. Link it like any skill.
    resolve. Before the smoke test, wait until the harness has registered the new subagents;
    confirm via its agent list, a registration notice, or a fresh session. A spawn before
    registration can silently fall back to a general agent with every tool. Then spawn one
-   role (the reviewer) and confirm it follows the charter's report format and cannot edit.
-   A smoke-test spawn with tools beyond the role's access level is a FAILURE, never a pass.
+   role (the reviewer). First confirm it really is `mao-reviewer` (its name or its charter
+   in context), not a fallback; otherwise FAILURE, whatever its tools. Then list its actual
+   tools and compare them with what the approved plan said this harness enforces for that
+   role: a tool the plan said would be blocked but is present, or a required tool (such as
+   read) that is missing, is a FAILURE, never a pass. Limits the plan declared prompt-only
+   (with a cited doc line) are expected: pass if the reviewer follows its charter (report
+   format, no edits), and report them as "prompt-only, not enforced"; a tool present for an
+   unverified (uncited) limit is a FAILURE. Never reclassify a
+   limit as prompt-only after a failed check: report the failure, and any plan change needs
+   re-approval.
    Confirm each retired item is gone and the rest of its file is unchanged. Report
    mismatches; never claim success without this.
