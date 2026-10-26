@@ -10,13 +10,13 @@ Turn an operator request into a backlog item.
 | Glossary | ../../docs/megaplan/glossary.md | All | Naming authority |
 
 ## Process
-1. The orchestrator (primary session) runs the megaplan interview — the
+1. The main agent runs the megaplan interview — the
    operator answers — until every answer names something checkable.
-2. The orchestrator restates the scope as what will NOT be touched; the
+2. The main agent restates the scope as what will NOT be touched; the
    operator confirms.
-3. A mechanical-tier worker creates the backlog row (next `b` ID) and, when
+3. mao-mechanical creates the backlog row (next `b` ID) and, when
    the item needs a file, the item file from the template.
-4. The mechanical worker logs the opening in the item's `## Log`.
+4. mao-mechanical logs the opening in the item's `## Log`.
 
 ## Outputs
 | Artifact | Location | Format |

@@ -9,12 +9,12 @@ Independent check in fresh context.
 | Changed files | working tree (git diff vs HEAD) | Full diff | The result |
 
 ## Process
-1. A fresh verifier (never the author) checks each criterion: PASS/FAIL
+1. A fresh mao-verifier (never the author) checks each criterion: PASS/FAIL
    with exact commands and output.
-2. Ordinary items: verifier. Significant / cross-cutting / risky items:
-   reviewer plus verifier; pre-release: the verify-skill panel.
-3. A mechanical-tier worker logs the verdict in the item's `## Log` and
-   sets the row to `review`, as directed by the orchestrator.
+2. Ordinary items: mao-verifier. Significant / cross-cutting / risky items:
+   mao-reviewer plus mao-verifier; pre-release: an independent panel.
+3. mao-mechanical logs the verdict in the item's `## Log` and
+   sets the row to `review`, as directed by the main agent.
 
 ## Outputs
 | Artifact | Location | Format |

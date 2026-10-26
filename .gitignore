@@ -1,8 +1,10 @@
 # Local secrets
 .env
 .env.*
-!.env.example
-!.env.sample
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
 
 # Logs, temporary files, backups, and editor/OS metadata
 *.log

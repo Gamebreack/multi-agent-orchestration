@@ -10,13 +10,13 @@ Turn a request into a work item.
 | Glossary | `<glossary if used>` | All | Naming authority |
 
 ## Process
-1. The orchestrator (primary session) runs the intake interview — the
+1. The main agent runs the intake interview — the
    operator answers — until every answer names something checkable.
-2. The orchestrator restates the scope as what will NOT be touched; the
+2. The main agent restates the scope as what will NOT be touched; the
    operator confirms.
-3. A mechanical-tier worker creates the index row (next ID) and, when the
+3. mao-mechanical creates the index row (next ID) and, when the
    item needs a file, the item file.
-4. The mechanical worker logs the opening in the item's log.
+4. mao-mechanical logs the opening in the item's log.
 
 ## Outputs
 | Artifact | Location | Format |

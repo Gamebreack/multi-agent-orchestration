@@ -9,12 +9,12 @@ Delegated edits by specialist workers.
 | Working files | paths the proposal names | As named | Edit targets |
 
 ## Process
-1. Orchestrator delegates each unit to the tier the work needs:
-   deterministic edits → mechanical; ordinary work → implementer; genuinely
-   difficult → hard-implementer. At most 3 concurrent workers; group tiny
+1. The main agent delegates each unit to the tier the work needs:
+   deterministic edits → mao-mechanical; ordinary work → mao-implementer;
+   genuinely difficult → mao-hard-implementer. At most 3 concurrent workers; group tiny
    edits by file ownership, never one worker per edit.
 2. Workers report files changed, verification run, failures. On failure the
-   coordinator resumes the same task with feedback; escalation only after
+   main agent resumes the same task with feedback; escalation only after
    a retry fails.
 3. Log what happened (not what was intended) in the item's `## Log`.
 

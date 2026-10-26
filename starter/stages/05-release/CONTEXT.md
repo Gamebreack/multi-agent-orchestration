@@ -11,9 +11,11 @@ Ledger, close-out, ship.
 ## Process
 1. The operator writes the ledger line (ID, date, one sentence). The
    operator's line — never agent-written.
-2. Close-out in one commit, with operator authorization: the orchestrator
-   delegates the edits to a worker — delete the index row, delete the item
-   file (it stays reachable in history), update the as-built doc if the
+2. Close-out in one commit, with operator authorization: the main agent
+   delegates the edits to mao-implementer (workers never commit), then makes
+   the commit itself, only on the operator's request, after running the
+   repo's pre-commit hooks (never --no-verify). Delete the index row and the
+   item file (it stays reachable in history); update the as-built doc if the
    item changed what exists.
 3. The operator ships (push is operator-only).
 

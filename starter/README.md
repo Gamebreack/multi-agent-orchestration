@@ -1,7 +1,9 @@
 # ICM starter workspace
 
 Copy this directory into any project to get a hybrid-ICM workflow: numbered
-stages organize each work item; specialist agents execute the stage work.
+stages organize each work item; specialist agents execute the stage work
+(the mao-* role skills — see docs/policies.md in the multi-agent-orchestration
+repo this starter came from).
 
 ## Use it
 
@@ -17,8 +19,8 @@ stages organize each work item; specialist agents execute the stage work.
 
 ## Rules that travel with it
 
-- The primary agent (orchestrator/manager) never writes; specialist tiers
-  execute stage work.
+- The main agent plans and delegates (it may make a truly trivial edit
+  itself); role agents execute stage work.
 - Every stage contract has Inputs / Process / Outputs; keep each under 80
   lines; reference docs under 200.
 - Work state lives in the item's log, the index row's status, and the working
