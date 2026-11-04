@@ -7,8 +7,8 @@ system-level choices only, nothing about a single run.
 2. What already exists that work here touches? (paths; they become the
    routing table)
 3. What is out of scope? (the "not touching" list every work item inherits)
-4. Which conventions file loads for agents here? (AGENTS.md / CLAUDE.md /
-   none)
+4. Which conventions file loads for agents here? (AGENTS.md, your harness's equivalent,
+   or none)
 5. Where does the work index live, and where do item files live? (defaults:
    backlog.md at the root, items/ beside it)
 6. Is there a glossary (naming authority)? (optional — skip to use none)

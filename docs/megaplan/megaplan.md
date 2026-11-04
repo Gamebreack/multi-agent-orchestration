@@ -6,7 +6,7 @@ A portable, harness-agnostic agent setup: tool-neutral global instructions, role
 and an agent-run setup procedure that translates them into each harness's native local config.
 Nothing harness-specific and no model IDs are committed. It doubles as a reusable starter
 workspace for ICM (Interpretable Context Methodology, Jake Van Clief —
-https://github.com/RinDig/Interpreted-Context-Methdology), where ICM's folder structure acts as the
+https://github.com/RinDig/Interpretable-Context-Methodology), where ICM's folder structure acts as the
 agent orchestration.
 
 ## What already exists
