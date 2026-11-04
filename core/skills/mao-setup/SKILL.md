@@ -140,10 +140,12 @@ after backup. Show the exact command and source before asking.
 | OpenSpec CLI | https://github.com/Fission-AI/OpenSpec | `npm i -g @fission-ai/openspec` |
 | `verify` skill | https://github.com/Gamebreack/agent-verification (`.agents/skills/verify`) | link the skill dir |
 | `megaplan` skill | https://github.com/Gamebreack/megaplan (`skills/megaplan`) | link the skill dir |
+| `flow-map` skill | https://github.com/Gamebreack/flow-map (`.agents/skills/flow-map`) | link the skill dir |
 | `grilling`, `grill-me` | https://github.com/mattpocock/skills | `npx skills add mattpocock/skills` |
 
-`verify`/`megaplan`: reuse an existing local checkout (ask for its path or search the usual
-project directory); else clone to `~/.local/share/mao/vendor/<repo-name>`. Link as in step 2.
+`verify`/`megaplan`/`flow-map`: reuse an existing local checkout (ask for its path or search
+the usual project directory); else clone to `~/.local/share/mao/vendor/<repo-name>`. Link as
+in step 2.
 `npx skills add`: read its live `--help` for agent, scope and skill-selection flags; target
 only this harness (or `~/.agents/skills`), install only `grilling` and `grill-me`, list the
 exact paths it will write in the plan, and record what it changed for uninstall. If those

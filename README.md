@@ -51,6 +51,7 @@ Each is asked separately (y/N) during install.
 - [OpenSpec CLI](https://github.com/Fission-AI/OpenSpec): `npm i -g @fission-ai/openspec`
 - [`verify` skill](https://github.com/Gamebreack/agent-verification)
 - [`megaplan` skill](https://github.com/Gamebreack/megaplan)
+- [`flow-map` skill](https://github.com/Gamebreack/flow-map)
 - [`grilling` and `grill-me` skills](https://github.com/mattpocock/skills)
 
 ## Flagged
