@@ -8,8 +8,6 @@
 
 ## Checklist
 
-- [ ] No model names, machine paths or secrets added
-- [ ] No rule duplicated into a second file
-- [ ] `CONTEXT.md` under 80 lines; reference docs under 200
+- [ ] Follows the rules in AGENTS.md and docs/policies.md
 - [ ] `flow-map.md` updated if the flow changed
 - [ ] For `mao-setup` changes: dry-run plan included, paths redacted

@@ -1,6 +1,6 @@
 # Onboarding — answer all at once, one pass
 
-Copy your answers into CONTEXT.md. Configure the factory, not the product:
+Copy your answers into CONTEXT.md and the stage contracts under stages/. Configure the factory, not the product:
 system-level choices only, nothing about a single run.
 
 1. What is this workspace for? (one sentence; becomes CONTEXT.md's opening)

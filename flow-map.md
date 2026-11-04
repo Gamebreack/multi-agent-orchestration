@@ -2,7 +2,7 @@
 
 How MAO works end to end: you clone the repo and ask your agent to read and follow `core/skills/mao-setup/SKILL.md` (A); from then on every task you give the agent is planned, delegated to role agents, checked in a fresh context, and committed only when you ask (B). Pushing stays with you. This is the largest flow in the repo; uninstall is drawn as a side path, and the repo's own ICM work stages (`stages/`; `starter/` is the template for other projects) are a separate flow not drawn here.
 
-Renders on GitHub; VS Code needs a Mermaid extension.
+Renders on GitHub and in any Markdown viewer with Mermaid support.
 
 > **Status:** Every step is described in the sources; nothing is missing. MAO is instructions, not code: each step is carried out by your agent following them. Tool limits are hard only where your harness can enforce them; elsewhere they are prompt-only, and `mao-setup` says which in its plan.
 > Lines: solid = exists · red dashed or red band = missing · dotted = optional or read-only · "no code yet" (or "not described") box = missing stage · grey = outside the target · light grey dashed box = side path
@@ -20,7 +20,7 @@ flowchart TD
     TRIV["<b>Trivial edit</b><br/>main agent does it directly"]
     FB["<b>No subagents</b><br/>main agent works at role rigor"]
 
-    subgraph F1["Phase 1 · Install (per harness · re-run to update)"]
+    subgraph F1["Phase 1 · Install"]
         S1["<b>Detect harness</b><br/>reads its live docs"]
         S2["<b>Plan the links</b><br/>instructions, skills, roles, retirements"]
         S3["<b>Optional dependencies</b><br/>each asked y/N"]
@@ -87,9 +87,9 @@ flowchart TD
 
 | Phase | In one line |
 |---|---|
-| Install | Your agent reads its harness's live docs, plans every link and file, asks y/N per optional dependency, writes nothing until you approve, backs up and records each action, then smoke-tests one role agent. A failed check is reported as FAILURE, never passed; any plan change needs approval again. Uninstall (on request) shows a reverse plan of this harness's recorded actions and undoes them after approval; items another harness still uses, retired items and anything altered since install are kept by default. |
+| Install | Once per harness; re-run to update. Your agent reads its harness's live docs, plans every link and file, asks y/N per optional dependency, writes nothing until you approve, backs up and records each action, then smoke-tests one role agent. A failed check is reported as FAILURE, never passed; any plan change needs approval again. Uninstall (on request) shows a reverse plan of this harness's recorded actions and undoes them after approval; items another harness still uses and anything altered since install are kept by default; retired items are not restored unless you opt in. |
 | Plan | For each task the main agent reads the code and project context and chooses an approach. A one-line change it may do itself. Without subagent support it does the role work itself and never presents its own check as independent. |
-| Delegate | It briefs the cheapest role that can do the work reliably (`mao-hard-implementer` only for hard or failed work); workers edit, run their own checks and report, and never spawn workers. With no `mao-<role>` subagent installed, a generic subagent reads the role's charter. `mao-documenter` runs only when docs are requested or made inaccurate, once behavior is settled. |
+| Delegate | It briefs the cheapest role that can do the work reliably (`mao-hard-implementer` only for hard or failed work); implementers edit and run their own checks; every worker reports and never spawns workers. With no `mao-<role>` subagent installed, a generic subagent reads the role's charter. `mao-documenter` runs only when docs are requested or made inaccurate, once behavior is settled. |
 | Verify and commit | Checks run in a fresh context, never by the author; findings go back to the implementing role. The agent commits only when you ask, after the repo's pre-commit hooks pass (failures fixed, never bypassed); pushing is yours. |
 
 ## 2. Who talks to whom
@@ -143,13 +143,15 @@ sequenceDiagram
     participant PRJ as Your project
     YOU->>MA: asks for a change
     MA->>PRJ: reads code and conventions
-    MA->>MA: picks the cheapest capable role
+    Note over MA: picks the cheapest capable role
     MA->>W: self-contained brief
     W->>PRJ: edits, runs its own checks
     W-->>MA: files changed, commands, results
     MA->>CK: fresh-context check
     CK-->>MA: evidence or ranked findings
-    MA->>W: findings to fix, then recheck
+    opt findings
+        MA->>W: findings to fix, then recheck
+    end
     YOU->>MA: asks for a commit
     MA->>PRJ: runs pre-commit hooks, commits
     Note over YOU,PRJ: Push stays with you
@@ -164,7 +166,7 @@ sequenceDiagram
 | Delegate | `core/AGENTS.md` (Delegation), `core/skills/mao-<role>/SKILL.md` |
 | Verify and commit | `core/AGENTS.md` (Delegation step 8, Committing), `docs/policies.md` (Verification ladder) |
 
-Glossary: `docs/megaplan/glossary.md`.
+Glossary: [docs/megaplan/glossary.md](docs/megaplan/glossary.md).
 
 When the flow changes, the map changes in the same PR. To update, see what changed since the commit below.
 

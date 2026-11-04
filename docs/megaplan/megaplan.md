@@ -4,14 +4,14 @@
 
 A portable, harness-agnostic agent setup: tool-neutral global instructions, role skills (`mao-*`)
 and an agent-run setup procedure that translates them into each harness's native local config.
-Nothing harness-specific and no model IDs are committed. It doubles as a reusable starter
+It doubles as a reusable starter
 workspace for ICM (Interpretable Context Methodology, Jake Van Clief —
 https://github.com/RinDig/Interpretable-Context-Methodology), where ICM's folder structure acts as the
 agent orchestration.
 
 ## What already exists
 
-As-built, no backlog rows for any of this:
+As-built:
 
 - Portable core (b08): `core/AGENTS.md` (global instructions, roles by tier), seven role skills
   (`core/skills/mao-{scout,mechanical,implementer,hard-implementer,reviewer,verifier,documenter}`),
