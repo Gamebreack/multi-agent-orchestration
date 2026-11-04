@@ -1,13 +1,13 @@
 # ICM starter workspace
 
-Copy this directory into any project to get a hybrid-ICM workflow: numbered
-stages organize each work item; specialist agents execute the stage work
+Copy it into any project (see Use it) to get a staged workflow (ICM, Interpretable Context
+Methodology): numbered stages organize each work item; specialist agents execute the stage work
 (the mao-* role skills — see docs/policies.md in the multi-agent-orchestration
-repo this starter came from).
+repo this starter came from). Needs MAO installed: the stages name mao-* roles.
 
 ## Use it
 
-1. Copy `starter/` into your project.
+1. Copy `CONTEXT.md`, `stages/` and `setup/` from `starter/` into your project root.
 2. Answer `setup/questionnaire.md` — all at once, one pass.
 3. Fill the placeholders in `CONTEXT.md` from your answers.
 4. Adapt the stage contracts under `stages/` to your domain (rename, add,
@@ -32,5 +32,5 @@ repo this starter came from).
 
 ## Worked example
 
-This repo runs the same structure live: its root `CONTEXT.md`, `stages/`, and
+The multi-agent-orchestration repo runs the same structure live: its root `CONTEXT.md`, `stages/`, and
 `docs/megaplan/` (the work index) are the worked example.

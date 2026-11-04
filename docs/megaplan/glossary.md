@@ -14,4 +14,4 @@ A rename edits the existing row. If a term's code pointer no longer resolves, de
 | Tier | Intent for a role's model: fast, standard or deep (no model names) | `docs/policies.md` |
 | Access level | read-only, read+shell, edit or edit+shell; mapped to native tool limits by mao-setup | `docs/policies.md` |
 | Toolkit | This repo's portable deliverable (`core/`) | `README.md` |
-| Portability boundary | Nothing personal or harness-specific enters this repo — no MCP endpoints, credentials, model IDs or machine-specific paths | AGENTS.md (hard rules) |
+| Portability boundary | Nothing personal or harness-specific enters this repo — no MCP endpoints, credentials, model IDs or machine-specific paths | `docs/policies.md` (Portability boundary) |
