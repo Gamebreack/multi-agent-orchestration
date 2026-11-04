@@ -20,19 +20,46 @@ Beyond trivial changes, review and verification run in a fresh context, never by
 Workers never commit or push. The main agent commits only when you ask, after running the
 repo's pre-commit hooks, which it never bypasses. Pushing is yours. Each role gets only the access it needs; policies and their rationale are in [docs/policies.md](docs/policies.md).
 
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"system-ui, -apple-system, Segoe UI, sans-serif","fontSize":"15px","primaryTextColor":"#1b221e","lineColor":"#8a968f","clusterBkg":"transparent","clusterBorder":"#b7c0ba","titleColor":"#5d6962","edgeLabelBackground":"#ffffff"},"flowchart":{"curve":"basis","nodeSpacing":22,"rankSpacing":36,"padding":14,"htmlLabels":true}}}%%
+flowchart TD
+    MA["<b>Main agent</b><br/>the one you talk to · plans, delegates, reconciles"]
+
+    subgraph FAST["fast tier · cheapest"]
+        direction TB
+        SC["<b>scout</b><br/>read-only"]
+        ME["<b>mechanical</b><br/>edit + shell"]
+        DO["<b>documenter</b><br/>edit, docs only"]
+    end
+
+    subgraph STD["standard tier · default"]
+        direction TB
+        IM["<b>implementer</b><br/>edit + shell"]
+        VE["<b>verifier</b><br/>read + shell, never edits"]
+    end
+
+    subgraph DEEP["deep tier · strongest"]
+        direction TB
+        HI["<b>hard-implementer</b><br/>edit + shell"]
+        RE["<b>reviewer</b><br/>read-only, never edits"]
+    end
+
+    MA --> FAST
+    MA --> STD
+    MA --> DEEP
+
+    classDef main fill:#fbefd2,stroke:#c3962c,color:#1b221e
+    classDef fast fill:#dbe8f6,stroke:#4a7fb5,color:#1b221e
+    classDef std fill:#d8eee2,stroke:#3f8f68,color:#1b221e
+    classDef deep fill:#e7def4,stroke:#7a5aa6,color:#1b221e
+    class MA main
+    class SC,ME,DO fast
+    class IM,VE std
+    class HI,RE deep
+```
+
 > See the [flow map](flow-map.md): what happens from install to a verified commit, who talks
 > to whom, and the life of one task.
-
-```
-                      MAIN AGENT: plan, delegate, reconcile
-                                     |
-     +------------+------------+-----+------+-------------+-------------+
-     |            |            |            |             |             |
-  scout       mechanical   implementer   hard-impl.    reviewer      verifier
-  fast        fast         standard      deep          deep          standard
-  read-only   edit+shell   edit+shell    edit+shell    read-only     read+shell
-                                                                   (+ documenter: fast, docs only)
-```
 
 ## Quick start
 
