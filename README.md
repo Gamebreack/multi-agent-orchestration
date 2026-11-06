@@ -16,7 +16,7 @@ MAO turns the coding agent you already use into a planner. It splits each task, 
 
 The main agent (the one you talk to) plans the task, reads the relevant code, and delegates each piece to the
 cheapest role that can do it reliably. Role agents do the work and run their own checks.
-Beyond trivial changes, review and verification run in a fresh context, never by the author, and never edit.
+Beyond trivial, low-risk edits outside a tracked work item, review and verification run in a fresh context, never by the author, and never edit.
 Workers never commit or push. The main agent commits only when you ask, after running the
 repo's pre-commit hooks, which it never bypasses. Pushing is yours. Each role gets only the access it needs; policies and their rationale are in [docs/policies.md](docs/policies.md).
 

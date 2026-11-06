@@ -1,6 +1,6 @@
 # Flow map — from clone to a verified commit
 
-How MAO works end to end: you clone the repo and ask your agent to read and follow `core/skills/mao-setup/SKILL.md` (A); from then on every task you give the agent is planned, delegated to role agents, checked in a fresh context, and committed only when you ask (B). Pushing stays with you. This is the largest flow in the repo; uninstall is drawn as a side path, and the repo's own ICM work stages (`stages/`; `starter/` is the template for other projects) are a separate flow not drawn here.
+How MAO works end to end: you clone the repo and ask your agent to read and follow `core/skills/mao-setup/SKILL.md` (A); from then on every task you give the agent is planned, delegated to role agents, checked per the verification ladder, and committed only when you ask (B). Pushing stays with you. This is the largest flow in the repo; uninstall is drawn as a side path, and the repo's own ICM work stages (`stages/`; `starter/` is the template for other projects) are a separate flow not drawn here.
 
 Renders on GitHub and in any Markdown viewer with Mermaid support.
 
@@ -17,7 +17,7 @@ flowchart TD
     REQ["<b>Your task</b><br/>any request to the agent"]
     PUSH["<b>Push</b><br/>you decide · agent pushes only if asked"]
     UN["<b>Uninstall</b><br/>you ask · approve, then reverse manifest"]
-    TRIV["<b>Trivial edit</b><br/>main agent does it directly"]
+    TRIV["<b>Trivial edit</b><br/>one-line, low-risk · done directly"]
     FB["<b>No subagents</b><br/>main agent works at role rigor"]
 
     subgraph F1["Phase 1 · Install"]
@@ -39,7 +39,7 @@ flowchart TD
     end
 
     subgraph F4["Phase 4 · Verify and commit"]
-        V1["<b>Fresh-context check</b><br/>verifier, + reviewer if high-risk"]
+        V1["<b>Fresh-context check</b><br/>ladder: verifier, reviewer, panel"]
         C1["<b>Commit on request</b><br/>pre-commit hooks run, never skipped"]
     end
 
@@ -59,16 +59,17 @@ flowchart TD
     %% 11: side path
     P1 -.->|"no subagents"| FB
     D1 -->|"brief"| D2
-    D2 -->|"report"| V1
-    V1 -->|"findings"| D2
+    D2 <-->|"report, findings"| V1
     V1 -->|"you ask"| C1
     C1 --> PUSH
-    %% 17: side path
+    %% 16: side path
     S5 -.->|"manifest"| UN
+    %% 17: side path
+    TRIV -.->|"untracked: own check"| C1
     %% 18: side path
-    TRIV -.->|"own check"| C1
-    %% 19: side path
     FB -.->|"not independent"| C1
+    %% 19: side path
+    TRIV -.->|"tracked item"| V1
 
     classDef ext fill:#e7eae8,stroke:#8a968f,color:#1b221e
     classDef p1 fill:#dbe8f6,stroke:#4a7fb5,color:#1b221e
@@ -82,15 +83,15 @@ flowchart TD
     class D1,D2 p3
     class V1,C1 p4
     class UN,TRIV,FB side
-    linkStyle 1,9,11,17,18,19 stroke:#8a968f,stroke-width:1.5px,stroke-dasharray:2 3
+    linkStyle 1,9,11,16,17,18,19 stroke:#8a968f,stroke-width:1.5px,stroke-dasharray:2 3
 ```
 
 | Phase | In one line |
 |---|---|
-| Install | Once per harness; re-run to update. Your agent reads its harness's live docs, plans every link and file, asks y/N per optional dependency, writes nothing until you approve, backs up and records each action, then smoke-tests one role agent. A failed check is reported as FAILURE, never passed; any plan change needs approval again. Uninstall (on request) shows a reverse plan of this harness's recorded actions and undoes them after approval; items another harness still uses and anything altered since install are kept by default; retired items are not restored unless you opt in. |
+| Install | Once per harness; re-run to update. Your agent reads its harness's live docs, plans every link and file, asks y/N per optional dependency, writes nothing until you approve, backs up and records each action, then smoke-tests one role agent. A failed check is reported as FAILURE, never passed; any plan change needs approval again. Uninstall (on request) shows a reverse plan of this harness's recorded actions and undoes them after approval; items another harness still uses are kept; anything altered since install is kept by default; retired items are not restored unless you opt in. |
 | Plan | For each task the main agent reads the code and project context and chooses an approach. A one-line change it may do itself. Without subagent support it does the role work itself and never presents its own check as independent. |
-| Delegate | It briefs the cheapest role that can do the work reliably (`mao-hard-implementer` only for hard or failed work); implementers edit and run their own checks; every worker reports and never spawns workers. With no `mao-<role>` subagent installed, a generic subagent reads the role's charter. `mao-documenter` runs only when docs are requested or made inaccurate, once behavior is settled. |
-| Verify and commit | Checks run in a fresh context, never by the author; findings go back to the implementing role. The agent commits only when you ask, after the repo's pre-commit hooks pass (failures fixed, never bypassed); pushing is yours. |
+| Delegate | It briefs the cheapest role that can do the work reliably (`mao-hard-implementer` only for hard, high-risk or failed work); implementers edit and run their own checks; every worker reports and never spawns workers. With no `mao-<role>` subagent installed, a generic subagent reads the role's charter. `mao-documenter` runs only when docs are requested or made inaccurate, once behavior is settled. |
+| Verify and commit | Checks follow the verification ladder: a trivial, low-risk edit outside a tracked work item gets the implementer's own check; every other change is checked in a fresh context, never by the author — a verifier for any other change or any tracked item, plus a reviewer when it is significant or risky, plus an independent panel before a version is tagged; where rungs overlap, the highest applies, and a change to the ladder itself is checked under the base branch's ladder, at the significant rung or higher. Findings go back to the implementing role. The agent commits only when you ask, after the repo's pre-commit hooks pass (failures fixed, never bypassed); pushing is yours. |
 
 ## 2. Who talks to whom
 
@@ -170,4 +171,4 @@ Glossary: [docs/megaplan/glossary.md](docs/megaplan/glossary.md).
 
 When the flow changes, the map changes in the same PR. To update, see what changed since the commit below.
 
-Updated 2026-11-04 · multi-agent-orchestration main ea83b50
+Updated 2026-11-05 · multi-agent-orchestration docs/b12-ladder-changelog babaabc

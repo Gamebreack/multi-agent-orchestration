@@ -61,7 +61,8 @@ still lets the role work where the harness is coarser, plus a prompt-level note 
   main agent runs the repo's pre-commit hooks first and never bypasses them.
 - Verification never edits; a fix always goes back through a delegated implementer, never a
   "quick fix" by the verifier.
-- Review and verification run in a fresh context, never by the author.
+- Review and verification run in a fresh context, never by the author; the only exception is
+  the trivial rung of the verification ladder.
 - No command is classified as "safe": roles that must not change files get no edit tools,
   not a promise.
 - Enforcement is either HARD (native tool limits) or PROMPT (charter text). Which one applies
@@ -72,9 +73,18 @@ still lets the role work where the harness is coarser, plus a prompt-level note 
 | Change | Verification |
 |---|---|
 | Trivial, low-risk | implementer's own check |
-| Ordinary feature | fresh verifier |
+| Any other change, or any tracked item | fresh verifier |
 | Significant / cross-cutting / risky | reviewer + verifier, fixes re-verified |
-| Pre-release | independent panel (for example the verify skill) |
+| Pre-release | verifier plus an independent panel (for example the verify skill) |
+
+Every rung except trivial runs in a fresh context, never by the author. Trivial covers only
+one-line, low-risk edits made outside a tracked work item (an item in the project's work
+index), so a tracked item always gets at least a fresh verifier. Where rungs overlap, the
+highest applies. Pre-release means before tagging a version, not an item's close-out; it adds
+to the verifier run an independent panel of several fresh reviewers whose findings are
+reconciled, and the `verify` skill is one optional way to run it. A change to the ladder itself
+is verified under the ladder as it stands on the base branch, at the significant rung or
+higher.
 
 ## Burst policy
 
