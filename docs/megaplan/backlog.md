@@ -1,7 +1,6 @@
 # Backlog — Multi-agent orchestration toolkit + ICM starter workspace
 
-The **operator** is the human who owns this project: they answer the interview, confirm scope, and
-write `done.md`. The agent does everything else, including maintaining this file.
+The **operator** is the human who owns this project: they answer the interview and confirm scope. Who writes `done.md` is set in AGENTS.md; the agent maintains this file.
 
 ## Statuses
 
@@ -12,9 +11,7 @@ write `done.md`. The agent does everything else, including maintaining this file
 | `review` | Believed complete, waiting on the operator |
 | `superseded` | Replaced by another item, and not delivered |
 
-An item leaves this file when the operator writes its line in `done.md` — whether it was finished or
-superseded. The agent then edits `megaplan.md` under "what already exists" if the item changed what
-exists, and deletes both the row here and the item file. This file is live work only.
+An item leaves this file at close-out — finished or superseded — as defined in stages/05-release/. This file is live work only.
 
 ## Index
 
