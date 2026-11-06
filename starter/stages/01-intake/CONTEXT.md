@@ -7,7 +7,7 @@ Turn a request into a work item.
 |---|---|---|---|
 | Request | operator message / linked spec | Full | The work requested |
 | Work index | `../../<work index>` | Index | Next ID + live rows |
-| Glossary | `<glossary if used>` | All | Naming authority |
+| Glossary | `../../<glossary if used>` | All | Naming authority |
 
 ## Process
 1. The main agent runs the intake interview — the
@@ -21,8 +21,8 @@ Turn a request into a work item.
 ## Outputs
 | Artifact | Location | Format |
 |---|---|---|
-| Index row | `<work index>` | in-progress |
-| Item file | `<items dir>/<id>.md` | when needed |
+| Index row | `../../<work index>` | in-progress |
+| Item file | `../../<items dir>/<id>.md` | when needed |
 
 ## Checkpoint
 Operator confirms the scope restatement before the row exists. If corrected

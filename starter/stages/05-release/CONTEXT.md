@@ -6,11 +6,12 @@ Ledger, close-out, ship.
 | Source | File/Location | Section/Scope | Why |
 |---|---|---|---|
 | Verdict | `../../<items dir>/<id>.md` | log (latest) | Release evidence |
-| Ledger | `<done ledger>` | Table | Where the line goes |
+| Ledger | `../../<done ledger>` | Table | Where the line goes |
 
 ## Process
-1. The operator writes the ledger line (ID, date, one sentence). The
-   operator's line — never agent-written.
+1. The operator writes the ledger line (`ID | Date | Verified` — one
+   sentence of verification evidence). The operator's line — never
+   agent-written.
 2. Close-out in one commit, with operator authorization: the main agent
    delegates the edits to mao-implementer (workers never commit), then makes
    the commit itself, only on the operator's request, after running the
@@ -22,7 +23,7 @@ Ledger, close-out, ship.
 ## Outputs
 | Artifact | Location | Format |
 |---|---|---|
-| Ledger line | done ledger | operator-written |
+| Ledger line | `../../<done ledger>` | operator-written |
 | Close-out commit | version control | row + item file deleted |
 
 ## Checkpoint

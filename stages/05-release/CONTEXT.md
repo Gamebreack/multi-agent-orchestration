@@ -9,7 +9,8 @@ Ledger, close-out commit, push.
 | Ledger | ../../docs/megaplan/done.md | Table | Where the line goes |
 
 ## Process
-1. The operator writes the done-ledger line (ID, date, one sentence).
+1. The operator writes the done-ledger line (`ID | Date | Verified` — one
+   sentence of verification evidence).
 2. Close-out in one commit, with explicit operator authorization: the
    main agent delegates the edits to mao-implementer (workers never commit),
    then makes the commit itself, only on the operator's request, after
@@ -21,7 +22,7 @@ Ledger, close-out commit, push.
 ## Outputs
 | Artifact | Location | Format |
 |---|---|---|
-| Ledger line | docs/megaplan/done.md | operator-written |
+| Ledger line | ../../docs/megaplan/done.md | operator-written |
 | Close-out commit | git history | row + item file deleted |
 
 ## Checkpoint

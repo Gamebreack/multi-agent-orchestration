@@ -12,7 +12,8 @@ Independent check in fresh context.
 1. A fresh mao-verifier (never the author) checks each criterion: PASS/FAIL
    with exact commands and output.
 2. Ordinary items: mao-verifier. Significant / cross-cutting / risky items:
-   mao-reviewer plus mao-verifier; pre-release: an independent panel.
+   mao-reviewer plus mao-verifier; pre-release: an independent panel (a
+   fresh mao-reviewer plus mao-verifier, neither the author).
 3. mao-mechanical logs the verdict in the item's `## Log` and
    sets the row to `review`, as directed by the main agent.
 
@@ -20,10 +21,11 @@ Independent check in fresh context.
 | Artifact | Location | Format |
 |---|---|---|
 | Verdict | item file `## Log` | per-criterion PASS/FAIL + overall |
-| Row status | docs/megaplan/backlog.md | review |
+| Row status | ../../docs/megaplan/backlog.md | review |
 
 ## Checkpoint
-Operator reads the verdict; OPTIONAL findings may be sent back to stage 03.
+Operator reads the verdict. BLOCKER and SHOULD-FIX findings go back to
+stage 03; OPTIONAL findings go back only if the operator chooses.
 
 ## Audit
 Verification never edits (permission-denied by design); any fix routes

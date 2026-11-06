@@ -21,8 +21,8 @@ Turn an operator request into a backlog item.
 ## Outputs
 | Artifact | Location | Format |
 |---|---|---|
-| Backlog row | docs/megaplan/backlog.md | in-progress |
-| Item file | docs/megaplan/backlog-items/<id>.md | megaplan template |
+| Backlog row | ../../docs/megaplan/backlog.md | in-progress |
+| Item file | ../../docs/megaplan/backlog-items/<id>.md | megaplan template |
 
 ## Checkpoint
 Operator confirms the scope restatement before the row exists. If corrected
