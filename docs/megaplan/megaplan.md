@@ -26,7 +26,9 @@ As-built:
 - Hybrid ICM structure (b02, 2026-09-26): root AGENTS.md (layer 0) + CONTEXT.md (layer 1) +
   stages/01-intake…05-release stage contracts; work items flow intake → design → implement → verify →
   release.
-- Git repo on `main` with origin remote `https://github.com/Gamebreack/multi-agent-orchestration.git`.
+- Git repo on `main` with origin remote `https://github.com/Gamebreack/multi-agent-orchestration.git`;
+  versions are tags plus GitHub releases whose notes come from `CHANGELOG.md`, following
+  `CONTRIBUTING.md` (Releasing) (b12, 2026-11-06).
 - Negatives: no installer scripts, no per-harness files, no manager/orchestrator role, no model IDs.
 
 When an item changes what exists, edit the line it affects rather than appending a new one.
