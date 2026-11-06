@@ -9,11 +9,10 @@ Independent check in fresh context.
 | Changed files | working tree (uncommitted changes) | Full diff | The result |
 
 ## Process
-1. A fresh mao-verifier (never the author) checks each criterion: PASS/FAIL
-   with exact commands and output.
-2. Ordinary items: mao-verifier. Significant / cross-cutting / risky items:
-   mao-reviewer plus mao-verifier; pre-release: an independent panel (a
-   fresh mao-reviewer plus mao-verifier, neither the author).
+1. Pick the verification rung from the verification ladder in the global
+   instructions (MAO's core/AGENTS.md, Delegation step 8).
+2. The chosen check reports per criterion PASS/FAIL with exact commands
+   and output.
 3. mao-mechanical logs the verdict in the item's log and sets the index
    row to review.
 

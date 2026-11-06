@@ -9,5 +9,6 @@
 ## Checklist
 
 - [ ] Follows the rules in AGENTS.md and docs/policies.md
+- [ ] `CHANGELOG.md` entry under `[Unreleased]`, or not user-facing
 - [ ] `flow-map.md` updated if the flow changed
 - [ ] For `mao-setup` changes: dry-run plan included, paths redacted
