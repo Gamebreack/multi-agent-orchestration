@@ -4,12 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-06
+
+Tightens how changes get verified and documents how MAO is released. Re-run `mao-setup` to pick up the `core/AGENTS.md` change.
+
 ### Fixed
 - **Starter stage contracts are consistent:** stage-relative paths in every Inputs/Outputs table, stage 04 routes BLOCKER and SHOULD-FIX findings back to stage 03, and the stage 05 ledger format matches `done.md`. (#7)
-- **Verification ladder has one runtime home:** `core/AGENTS.md` now holds the full ladder. It adds a pre-release rung (a verifier run plus an independent panel, before tagging a version), gives every non-trivial change and every tracked work item at least a fresh verifier, checks changes to the ladder under the base branch's ladder at the significant rung or higher, says the highest rung applies when several match, limits the trivial self-check to low-risk edits outside a tracked work item, and no longer contradicts itself. Stage 04 points to it instead of restating it. Re-run `mao-setup` to pick up the `core/AGENTS.md` change.
+- **Verification ladder has one runtime home:** `core/AGENTS.md` now holds the full ladder. It adds a pre-release rung (a verifier run plus an independent panel, before tagging a version), gives every non-trivial change and every tracked work item at least a fresh verifier, checks changes to the ladder under the base branch's ladder at the significant rung or higher, says the highest rung applies when several match, limits the trivial self-check to low-risk edits outside a tracked work item, and no longer contradicts itself. Stage 04 points to it instead of restating it. Re-run `mao-setup` to pick up the `core/AGENTS.md` change. (#8)
 
 ### Added
-- **`CHANGELOG.md` and a release procedure** (CONTRIBUTING.md, Releasing); the pull request template asks for a changelog entry.
+- **`CHANGELOG.md` and a release procedure** (CONTRIBUTING.md, Releasing); the pull request template asks for a changelog entry. (#8)
 
 ## [0.2.0] - 2026-11-04
 
@@ -44,6 +48,7 @@ First tagged release of MAO: one set of instructions and role skills that your a
 - Setup waits for subagents to register before the smoke test, and sets numeric turn caps.
 - The smoke test checks against the declared enforcement instead of a blanket rule.
 
-[Unreleased]: https://github.com/Gamebreack/multi-agent-orchestration/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/Gamebreack/multi-agent-orchestration/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/Gamebreack/multi-agent-orchestration/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Gamebreack/multi-agent-orchestration/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Gamebreack/multi-agent-orchestration/releases/tag/v0.1.0
