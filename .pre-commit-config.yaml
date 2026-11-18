@@ -1,0 +1,48 @@
+# Git hooks (pre-commit framework). Install once per clone: `pre-commit install`. Run all: `pre-commit run --all-files`.
+# Never bypass with --no-verify.
+default_install_hook_types: [pre-commit]
+default_stages: [pre-commit]
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      # stages pinned: these hooks' manifests also declare other stages; all are pinned for consistency.
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+        stages: [pre-commit]
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+      - id: check-yaml
+        stages: [pre-commit]
+      - id: check-merge-conflict
+        args: [--assume-in-merge]
+        stages: [pre-commit]
+      - id: check-added-large-files
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      # Limits live in AGENTS.md (Hard rules); the script holds the numbers and the exempt list.
+      - id: doc-length
+        name: doc line limits (CONTEXT.md < 80, other Markdown < 200)
+        entry: scripts/check-doc-length.sh
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
+
+      # The lookbehind skips URL paths (https://host/home/x). This config is excluded because the regex text itself contains the prefixes.
+      - id: no-absolute-home-path
+        name: portability guard (no absolute home paths)
+        description: Machine-specific paths never enter this repo (see docs/policies.md).
+        entry: '(?<![A-Za-z0-9._~-])(/home/|/Users/)[A-Za-z0-9._-]+'
+        language: pygrep
+        types: [text]
+        exclude: ^\.pre-commit-config\.yaml$
+        stages: [pre-commit]

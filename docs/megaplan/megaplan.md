@@ -28,7 +28,9 @@ As-built:
   release.
 - Git repo on `main` with origin remote `https://github.com/Gamebreack/multi-agent-orchestration.git`;
   versions are tags plus GitHub releases whose notes come from `CHANGELOG.md`, following
-  `CONTRIBUTING.md` (Releasing) (b12, 2026-11-06).
+  `CONTRIBUTING.md` (Releasing) (b12, 2026-11-06). Commits run pre-commit hooks
+  (`.pre-commit-config.yaml`: secret scan, whitespace/YAML hygiene, doc line limits, absolute-home-path
+  guard) (b14, 2026-11-18).
 - Negatives: no installer scripts, no per-harness files, no manager/orchestrator role, no model IDs.
 
 When an item changes what exists, edit the line it affects rather than appending a new one.
