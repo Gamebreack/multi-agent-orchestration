@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- **Git hooks via pre-commit:** `.pre-commit-config.yaml` runs a gitleaks secret scan, whitespace and YAML hygiene checks, the `AGENTS.md` line limits (`scripts/check-doc-length.sh`) and a guard against absolute home paths; see CONTRIBUTING.md (Git hooks).
+
+### Changed
+- **`mao-reviewer` turn cap raised from ~30 to ~50:** in real use, about one reviewer in five reached the cap before writing its report and had to be nudged to deliver one. Re-run `mao-setup` to pick up the new cap in harnesses that enforce one. (#11)
+
 ## [0.2.1] - 2026-11-06
 
 Tightens how changes get verified and documents how MAO is released. Re-run `mao-setup` to pick up the `core/AGENTS.md` change.

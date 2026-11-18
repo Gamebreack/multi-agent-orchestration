@@ -9,6 +9,10 @@
 
 Every change keeps the rules in [AGENTS.md](AGENTS.md) and the portability boundary in [docs/policies.md](docs/policies.md#portability-boundary). Changes that alter the flow follow the update rule at the end of [flow-map.md](flow-map.md).
 
+## Git hooks
+
+This repo uses [pre-commit](https://pre-commit.com), which must be installed; then run `pre-commit install` once per clone. The hooks scan for secrets, fix whitespace and YAML hygiene, enforce the line limits in [AGENTS.md](AGENTS.md), and reject absolute home paths. Run them all with `pre-commit run --all-files`, and never bypass them with `--no-verify`.
+
 ## Working on this repo
 
 Maintainers track work in `stages/` and `docs/megaplan/`; contributors can ignore both.
